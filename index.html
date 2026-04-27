@@ -669,25 +669,31 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 30px 20px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
             color: #fff;
         }
 
         .ig-overlay-logo {
-            width: 50px;
-            margin-bottom: 12px;
+            width: 45px;
+            margin-bottom: 10px;
         }
 
-        .ig-overlay-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 12px;
+        .ig-overlay-date {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #f5a623;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f5a623;
         }
 
         .ig-overlay-events {
-            font-size: 0.95rem;
-            line-height: 1.8;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .ig-actions {
@@ -776,10 +782,10 @@
             bottom: 0;
             background: linear-gradient(
                 180deg,
-                rgba(0,0,0,0.3) 0%,
-                transparent 20%,
-                transparent 50%,
-                rgba(0,0,0,0.8) 100%
+                rgba(0,0,0,0.5) 0%,
+                transparent 25%,
+                transparent 40%,
+                rgba(0,0,0,0.95) 100%
             );
             display: flex;
             flex-direction: column;
@@ -808,47 +814,95 @@
 
         .reel-content {
             margin-bottom: 80px;
+            background: rgba(0,0,0,0.7);
+            padding: 16px;
+            border-left: 4px solid #f5a623;
+            position: relative;
         }
 
-        .reel-title {
-            font-size: 1.4rem;
+        .reel-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 100%;
+            background: repeating-linear-gradient(
+                -45deg,
+                #f5a623,
+                #f5a623 10px,
+                #1a1a1a 10px,
+                #1a1a1a 20px
+            );
+            opacity: 0.8;
+        }
+
+        .reel-date {
+            font-size: 1rem;
             font-weight: 800;
-            color: #fff;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            color: #f5a623;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .reel-events {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 6px;
+            margin-bottom: 12px;
         }
 
         .reel-event {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            padding: 12px 16px;
-            border-radius: 12px;
+            align-items: baseline;
+            gap: 10px;
             color: #fff;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .reel-event:last-child {
+            border-bottom: none;
         }
 
         .reel-event-time {
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: 800;
             min-width: 65px;
-            color: var(--dms-red);
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .reel-event-name {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
+            color: #ccc;
         }
 
-        .reel-event-emoji {
-            font-size: 1.2rem;
+        .reel-details {
+            background: rgba(245,166,35,0.15);
+            border: 1px solid rgba(245,166,35,0.3);
+            padding: 10px 12px;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.85);
+            margin-right: 50px;
+        }
+
+        .reel-detail-row {
+            margin-bottom: 4px;
+        }
+
+        .reel-detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .reel-detail-row strong {
+            display: inline-block;
+            min-width: 50px;
+            color: #f5a623;
+            text-transform: uppercase;
+            font-size: 0.7rem;
         }
 
         .reel-sidebar {
@@ -1523,12 +1577,12 @@
                         <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=800&fit=crop" alt="Makerspace">
                         <div class="ig-image-overlay">
                             <img src="dallasmakerspace.png" alt="DMS" class="ig-overlay-logo">
-                            <div class="ig-overlay-title">Today's Classes</div>
+                            <div class="ig-overlay-date">Monday, April 28</div>
                             <div class="ig-overlay-events">
-                                <div>&#127912; 10 AM - Intro to Ceramics</div>
-                                <div>&#128295; 2 PM - Woodworking 101</div>
-                                <div>&#9889; 6 PM - Laser Training</div>
-                                <div>&#128187; 7:30 PM - Arduino Night</div>
+                                <div>10:00am &nbsp; Intro to Ceramics</div>
+                                <div>2:00pm &nbsp; Woodworking 101</div>
+                                <div>6:00pm &nbsp; Laser Cutter Training</div>
+                                <div>7:00pm &nbsp; Guitar and Ukulele Session</div>
                             </div>
                         </div>
                     </div>
@@ -1607,28 +1661,28 @@
                             </div>
 
                             <div class="reel-content">
-                                <div class="reel-title">&#128197; Today's Classes</div>
+                                <div class="reel-date">Monday, April 28</div>
                                 <div class="reel-events">
                                     <div class="reel-event">
-                                        <span class="reel-event-emoji">&#127912;</span>
-                                        <span class="reel-event-time">10:00 AM</span>
+                                        <span class="reel-event-time">10:00am</span>
                                         <span class="reel-event-name">Intro to Ceramics</span>
                                     </div>
                                     <div class="reel-event">
-                                        <span class="reel-event-emoji">&#128295;</span>
-                                        <span class="reel-event-time">2:00 PM</span>
+                                        <span class="reel-event-time">2:00pm</span>
                                         <span class="reel-event-name">Woodworking 101</span>
                                     </div>
                                     <div class="reel-event">
-                                        <span class="reel-event-emoji">&#9889;</span>
-                                        <span class="reel-event-time">6:00 PM</span>
-                                        <span class="reel-event-name">Laser Training</span>
+                                        <span class="reel-event-time">6:00pm</span>
+                                        <span class="reel-event-name">Laser Cutter Training</span>
                                     </div>
                                     <div class="reel-event">
-                                        <span class="reel-event-emoji">&#128187;</span>
-                                        <span class="reel-event-time">7:30 PM</span>
-                                        <span class="reel-event-name">Arduino Night</span>
+                                        <span class="reel-event-time">7:00pm</span>
+                                        <span class="reel-event-name">Guitar and Ukulele Music Session</span>
                                     </div>
+                                </div>
+                                <div class="reel-details">
+                                    <div class="reel-detail-row"><strong>Where</strong> Classroom - North Lobby</div>
+                                    <div class="reel-detail-row"><strong>Details</strong> Bring your guitar and/or ukulele</div>
                                 </div>
                             </div>
 
