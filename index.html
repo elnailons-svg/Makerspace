@@ -897,7 +897,7 @@
                 <!-- 8AM Post - Today -->
                 <div class="post-wrapper">
                     <div class="post-label">8:00 AM Post — Today's Events</div>
-                    <div class="post-square">
+                    <div class="post-square" id="post-today">
                         <div class="post-bg"></div>
                         <div class="post-content">
                             <div class="post-header">
@@ -908,44 +908,17 @@
                                 <div class="post-subtitle">See what's happening</div>
                             </div>
                             <div class="card">
-                                <div class="card-title">Monday, April 28</div>
-                                <div class="schedule-table">
+                                <div class="card-title" id="today-date">Loading...</div>
+                                <div class="schedule-table" id="today-events">
                                     <div class="table-header">
                                         <span>Time</span>
                                         <span>Class</span>
                                         <span></span>
                                     </div>
                                     <div class="table-row">
-                                        <div class="row-time">10:00am</div>
-                                        <div>
-                                            <div class="row-event">Intro to Ceramics</div>
-                                            <div class="row-location">Ceramics Room</div>
-                                        </div>
-                                        <div class="row-cost">$25</div>
-                                    </div>
-                                    <div class="table-row">
-                                        <div class="row-time">2:00pm</div>
-                                        <div>
-                                            <div class="row-event">Woodworking 101</div>
-                                            <div class="row-location">Wood Shop</div>
-                                        </div>
-                                        <div class="row-cost free">Free</div>
-                                    </div>
-                                    <div class="table-row">
-                                        <div class="row-time">6:00pm</div>
-                                        <div>
-                                            <div class="row-event">Laser Training</div>
-                                            <div class="row-location">Laser Lab</div>
-                                        </div>
-                                        <div class="row-cost">Members</div>
-                                    </div>
-                                    <div class="table-row">
-                                        <div class="row-time">7:30pm</div>
-                                        <div>
-                                            <div class="row-event">Arduino Night</div>
-                                            <div class="row-location">Electronics Lab</div>
-                                        </div>
-                                        <div class="row-cost free">Free</div>
+                                        <div class="row-time">...</div>
+                                        <div><div class="row-event">Loading events...</div></div>
+                                        <div class="row-cost"></div>
                                     </div>
                                 </div>
                                 <div class="card-footer">calendar.dallasmakerspace.org</div>
@@ -957,7 +930,7 @@
                 <!-- 8PM Post - Tomorrow -->
                 <div class="post-wrapper">
                     <div class="post-label">8:00 PM Post — Tomorrow's Events</div>
-                    <div class="post-square">
+                    <div class="post-square" id="post-tomorrow">
                         <div class="post-bg welding"></div>
                         <div class="post-content">
                             <div class="post-header">
@@ -968,44 +941,17 @@
                                 <div class="post-subtitle">Plan your visit</div>
                             </div>
                             <div class="card">
-                                <div class="card-title">Tuesday, April 29</div>
-                                <div class="schedule-table">
+                                <div class="card-title" id="tomorrow-date">Loading...</div>
+                                <div class="schedule-table" id="tomorrow-events">
                                     <div class="table-header">
                                         <span>Time</span>
                                         <span>Class</span>
                                         <span></span>
                                     </div>
                                     <div class="table-row">
-                                        <div class="row-time">11:00am</div>
-                                        <div>
-                                            <div class="row-event">3D Printing Basics</div>
-                                            <div class="row-location">3D Lab</div>
-                                        </div>
-                                        <div class="row-cost">$15</div>
-                                    </div>
-                                    <div class="table-row">
-                                        <div class="row-time">1:00pm</div>
-                                        <div>
-                                            <div class="row-event">Vinyl Cutter Training</div>
-                                            <div class="row-location">Arts & Crafts</div>
-                                        </div>
-                                        <div class="row-cost free">Free</div>
-                                    </div>
-                                    <div class="table-row">
-                                        <div class="row-time">5:30pm</div>
-                                        <div>
-                                            <div class="row-event">CNC Router Intro</div>
-                                            <div class="row-location">Wood Shop</div>
-                                        </div>
-                                        <div class="row-cost">$40</div>
-                                    </div>
-                                    <div class="table-row">
-                                        <div class="row-time">7:00pm</div>
-                                        <div>
-                                            <div class="row-event">Welding Open Shop</div>
-                                            <div class="row-location">Metal Shop</div>
-                                        </div>
-                                        <div class="row-cost">Members</div>
+                                        <div class="row-time">...</div>
+                                        <div><div class="row-event">Loading events...</div></div>
+                                        <div class="row-cost"></div>
                                     </div>
                                 </div>
                                 <div class="card-footer">calendar.dallasmakerspace.org</div>
@@ -1262,23 +1208,17 @@ npm test   # Dry run - see what would post</pre>
         function openModal(postElement) {
             const modal = document.getElementById('modal');
             const modalPost = document.getElementById('modal-post');
-
-            // Clone the post content
             modalPost.innerHTML = postElement.innerHTML;
-
-            // Check if it's a story format
             if (postElement.classList.contains('post-story')) {
                 modalPost.classList.add('story');
             } else {
                 modalPost.classList.remove('story');
             }
-
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal(event) {
-            // Only close if clicking overlay or close button
             if (event.target.classList.contains('modal-overlay') ||
                 event.target.classList.contains('modal-close')) {
                 document.getElementById('modal').classList.remove('active');
@@ -1286,18 +1226,146 @@ npm test   # Dry run - see what would post</pre>
             }
         }
 
-        // Add click handlers to all posts
         document.querySelectorAll('.post-square, .post-story').forEach(post => {
             post.addEventListener('click', () => openModal(post));
         });
 
-        // ESC key to close
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 document.getElementById('modal').classList.remove('active');
                 document.body.style.overflow = '';
             }
         });
+
+        // ========== LIVE RSS FEED ==========
+        const RSS_URL = 'https://calendar.dallasmakerspace.org/events/feed/rss';
+        const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+
+        async function fetchEvents() {
+            try {
+                const response = await fetch(CORS_PROXY + encodeURIComponent(RSS_URL));
+                const text = await response.text();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(text, 'text/xml');
+                const items = xml.querySelectorAll('item');
+
+                const events = [];
+                items.forEach(item => {
+                    const title = item.querySelector('title')?.textContent || '';
+                    const description = item.querySelector('description')?.textContent || '';
+
+                    // Parse date/time from description
+                    const whenMatch = description.match(/When:<\/b>\s*<\/td>\s*<td[^>]*>([^<]+)/i) ||
+                                      description.match(/(\w+ \w+ \d+ \d+[ap]m)/i);
+                    const whereMatch = description.match(/Where:<\/b>\s*<\/td>\s*<td[^>]*>([^<]+)/i);
+                    const costMatch = description.match(/Cost:<\/b>\s*<\/td>\s*<td[^>]*>\$?([\d.]+)/i);
+
+                    if (whenMatch) {
+                        const whenText = whenMatch[1] || whenMatch[0];
+                        // Parse: "Mon Apr 28 10am — 4pm Central" or similar
+                        const dateMatch = whenText.match(/(\w+)\s+(\w+)\s+(\d+)/);
+                        const timeMatch = whenText.match(/(\d+(?::\d+)?)\s*(am|pm)/i);
+
+                        if (dateMatch && timeMatch) {
+                            const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                            const month = monthNames.indexOf(dateMatch[2]);
+                            const day = parseInt(dateMatch[3]);
+                            const year = new Date().getFullYear();
+
+                            let hour = parseInt(timeMatch[1]);
+                            if (timeMatch[2].toLowerCase() === 'pm' && hour !== 12) hour += 12;
+                            if (timeMatch[2].toLowerCase() === 'am' && hour === 12) hour = 0;
+
+                            events.push({
+                                title: title.replace(/\s*\(\$[\d.]+\)\s*$/, '').trim(),
+                                date: new Date(year, month, day),
+                                time: `${timeMatch[1]}${timeMatch[2].toLowerCase()}`,
+                                timeSort: hour,
+                                location: whereMatch ? whereMatch[1].replace(/^Workshop - |^Classroom - /g, '').trim() : '',
+                                cost: costMatch ? parseFloat(costMatch[1]) : 0
+                            });
+                        }
+                    }
+                });
+
+                return events;
+            } catch (err) {
+                console.error('Failed to fetch RSS:', err);
+                return [];
+            }
+        }
+
+        function formatDate(date) {
+            const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+            const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+            return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
+        }
+
+        function isSameDay(d1, d2) {
+            return d1.getFullYear() === d2.getFullYear() &&
+                   d1.getMonth() === d2.getMonth() &&
+                   d1.getDate() === d2.getDate();
+        }
+
+        function renderEvents(events, containerId, maxEvents = 10) {
+            const container = document.getElementById(containerId);
+            if (!events.length) {
+                container.innerHTML = `
+                    <div class="table-header"><span>Time</span><span>Class</span><span></span></div>
+                    <div class="table-row">
+                        <div class="row-time">—</div>
+                        <div><div class="row-event">No events scheduled</div></div>
+                        <div class="row-cost"></div>
+                    </div>`;
+                return;
+            }
+
+            // Sort by time
+            events.sort((a, b) => a.timeSort - b.timeSort);
+            const displayEvents = events.slice(0, maxEvents);
+
+            let html = `<div class="table-header"><span>Time</span><span>Class</span><span></span></div>`;
+            displayEvents.forEach(ev => {
+                const costClass = ev.cost === 0 ? 'free' : '';
+                const costText = ev.cost === 0 ? 'Free' : `$${ev.cost}`;
+                html += `
+                    <div class="table-row">
+                        <div class="row-time">${ev.time}</div>
+                        <div>
+                            <div class="row-event">${ev.title}</div>
+                            <div class="row-location">${ev.location}</div>
+                        </div>
+                        <div class="row-cost ${costClass}">${costText}</div>
+                    </div>`;
+            });
+
+            if (events.length > maxEvents) {
+                html += `<div class="table-row" style="justify-content:center;color:#888;font-size:0.7rem;">
+                    +${events.length - maxEvents} more events
+                </div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        async function loadLiveData() {
+            const events = await fetchEvents();
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
+            const todayEvents = events.filter(e => isSameDay(e.date, today));
+            const tomorrowEvents = events.filter(e => isSameDay(e.date, tomorrow));
+
+            document.getElementById('today-date').textContent = formatDate(today);
+            document.getElementById('tomorrow-date').textContent = formatDate(tomorrow);
+
+            renderEvents(todayEvents, 'today-events');
+            renderEvents(tomorrowEvents, 'tomorrow-events');
+        }
+
+        // Load on page ready
+        loadLiveData();
     </script>
 </body>
 </html>
