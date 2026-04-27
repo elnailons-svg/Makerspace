@@ -592,20 +592,132 @@
             border: 2px solid transparent;
         }
 
-        .platform-tab.facebook {
+        .platform-tab.facebook.active {
             background: linear-gradient(135deg, #1877f2 0%, #0d5bbd 100%);
             color: #fff;
         }
 
-        .platform-tab.instagram {
+        .platform-tab.facebook:not(.active) {
             background: rgba(255, 255, 255, 0.05);
             color: #888;
             border-color: rgba(255, 255, 255, 0.1);
         }
 
-        .platform-tab.instagram:hover {
-            border-color: #e1306c;
+        .platform-tab.instagram.active {
+            background: linear-gradient(135deg, #e1306c 0%, #c13584 50%, #833ab4 100%);
             color: #fff;
+        }
+
+        .platform-tab.instagram:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: #888;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .platform-tab:hover:not(.active) {
+            color: #fff;
+        }
+
+        /* Platform post switching */
+        .platform-post {
+            display: none;
+        }
+
+        .platform-post.active {
+            display: block;
+        }
+
+        /* Instagram specific styles */
+        .ig-post {
+            max-width: 500px;
+        }
+
+        .ig-post::before {
+            background: linear-gradient(135deg, #e1306c, #833ab4, #e1306c);
+        }
+
+        .ig-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: #fff;
+        }
+
+        .ig-username {
+            flex: 1;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #262626;
+        }
+
+        .ig-image {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
+        }
+
+        .ig-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ig-image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            color: #fff;
+        }
+
+        .ig-overlay-logo {
+            width: 50px;
+            margin-bottom: 12px;
+        }
+
+        .ig-overlay-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .ig-overlay-events {
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .ig-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #fff;
+        }
+
+        .ig-action-group {
+            display: flex;
+            gap: 16px;
+        }
+
+        .ig-action {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .ig-caption {
+            padding: 0 16px 16px 16px;
+            background: #fff;
+            font-size: 0.9rem;
+            color: #262626;
+            line-height: 1.5;
+        }
+
+        .ig-hashtags {
+            color: #00376b;
+            font-size: 0.85rem;
         }
 
         /* Stats Bar */
@@ -995,11 +1107,12 @@
                 </div>
 
                 <div class="platform-tabs">
-                    <div class="platform-tab facebook">Facebook</div>
-                    <div class="platform-tab instagram">Instagram</div>
+                    <div class="platform-tab facebook active" onclick="showPlatform('facebook')">Facebook</div>
+                    <div class="platform-tab instagram" onclick="showPlatform('instagram')">Instagram</div>
                 </div>
 
-                <div class="post-container">
+                <!-- Facebook Post -->
+                <div id="facebook-post" class="post-container platform-post active">
                     <div class="post-header">
                         <div class="post-avatar">
                             <img src="dallasmakerspace.png" alt="DMS">
@@ -1122,6 +1235,46 @@
                             <span class="post-action-icon">&#8599;</span>
                             Share
                         </div>
+                    </div>
+                </div>
+
+                <!-- Instagram Post -->
+                <div id="instagram-post" class="post-container platform-post ig-post">
+                    <div class="ig-header">
+                        <div class="post-avatar">
+                            <img src="dallasmakerspace.png" alt="DMS">
+                        </div>
+                        <div class="ig-username">dallasmakerspace</div>
+                        <div class="post-menu">&middot;&middot;&middot;</div>
+                    </div>
+
+                    <div class="ig-image">
+                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=800&fit=crop" alt="Makerspace">
+                        <div class="ig-image-overlay">
+                            <img src="dallasmakerspace.png" alt="DMS" class="ig-overlay-logo">
+                            <div class="ig-overlay-title">Today's Classes</div>
+                            <div class="ig-overlay-events">
+                                <div>&#127912; 10 AM - Intro to Ceramics</div>
+                                <div>&#128295; 2 PM - Woodworking 101</div>
+                                <div>&#9889; 6 PM - Laser Training</div>
+                                <div>&#128187; 7:30 PM - Arduino Night</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ig-actions">
+                        <div class="ig-action-group">
+                            <span class="ig-action">&#9825;</span>
+                            <span class="ig-action">&#128172;</span>
+                            <span class="ig-action">&#9993;</span>
+                        </div>
+                        <span class="ig-action">&#9734;</span>
+                    </div>
+
+                    <div class="ig-caption">
+                        <strong>dallasmakerspace</strong> &#128197; Check out today's classes! From ceramics to laser cutting, there's something for everyone. Full calendar at calendar.dallasmakerspace.org
+                        <br><br>
+                        <span class="ig-hashtags">#dallasmakerspace #makerspace #diy #woodworking #ceramics #lasercutting #arduino #makers #dallas</span>
                     </div>
                 </div>
             </section>
@@ -1436,6 +1589,20 @@
 
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showPlatform(platform) {
+            // Hide all platform posts
+            document.querySelectorAll('.platform-post').forEach(post => {
+                post.classList.remove('active');
+            });
+            document.querySelectorAll('.platform-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected platform
+            document.getElementById(platform + '-post').classList.add('active');
+            document.querySelector('.platform-tab.' + platform).classList.add('active');
         }
     </script>
 </body>
