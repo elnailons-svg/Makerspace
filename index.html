@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMS Daily Social Poster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dms-red: #f05545;
+            --dms-black: #1a1a1a;
+            --dms-dark: #0d0d0d;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #0d0d0d 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Main Navigation Tabs */
+        .main-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(240, 85, 69, 0.2);
+            padding: 0 20px;
+        }
+
+        .main-nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+        }
+
+        .nav-logo img {
+            width: 36px;
+            height: auto;
+        }
+
+        .nav-logo span {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0;
+        }
+
+        .nav-tab {
+            padding: 20px 24px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            color: #999;
+        }
+
+        .nav-tab.active {
+            color: var(--dms-red);
+            border-bottom-color: var(--dms-red);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 60px 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header-logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 20px rgba(240, 85, 69, 0.3));
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: #888;
+            font-weight: 400;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Section Headers */
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-label::before,
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(240, 85, 69, 0.3), transparent);
+        }
+
+        .section-label span {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--dms-red);
+            font-weight: 600;
+        }
+
+        /* Flow Section */
+        .flow-section {
+            margin-bottom: 80px;
+        }
+
+        .flow-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 24px;
+            border: 1px solid rgba(240, 85, 69, 0.15);
+        }
+
+        .flow-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 25px;
+            position: relative;
+        }
+
+        .flow-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .flow-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .flow-icon.trigger {
+            background: linear-gradient(135deg, var(--dms-red) 0%, #c9392b 100%);
+            box-shadow: 0 10px 30px rgba(240, 85, 69, 0.4);
+        }
+
+        .flow-icon.source {
+            background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+            border: 2px solid var(--dms-red);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .flow-icon.process {
+            background: linear-gradient(135deg, var(--dms-red) 0%, #c9392b 100%);
+            box-shadow: 0 10px 30px rgba(240, 85, 69, 0.4);
+        }
+
+        .flow-icon.facebook {
+            background: linear-gradient(135deg, #1877f2 0%, #0d5bbd 100%);
+            box-shadow: 0 10px 30px rgba(24, 119, 242, 0.3);
+        }
+
+        .flow-icon.instagram {
+            background: linear-gradient(135deg, #e1306c 0%, #c13584 50%, #833ab4 100%);
+            box-shadow: 0 10px 30px rgba(225, 48, 108, 0.3);
+        }
+
+        .flow-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+        }
+
+        .flow-sublabel {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--dms-red);
+            padding: 0 5px;
+            opacity: 0.6;
+        }
+
+        .flow-split {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-left: 20px;
+        }
+
+        .flow-branch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Post Mockup Section */
+        .mockup-section {
+            margin-top: 40px;
+        }
+
+        .post-container {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 750px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .post-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--dms-red), #1a1a1a, var(--dms-red));
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        /* Post Header */
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-bottom: 1px solid #eef0f2;
+            background: #fafbfc;
+        }
+
+        .post-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #eee;
+            overflow: hidden;
+        }
+
+        .post-avatar img {
+            width: 36px;
+            height: auto;
+        }
+
+        .post-meta {
+            flex: 1;
+        }
+
+        .post-author {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .verified-badge {
+            width: 16px;
+            height: 16px;
+            background: #1877f2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            color: #fff;
+        }
+
+        .post-time {
+            font-size: 0.8rem;
+            color: #65676b;
+            margin-top: 2px;
+        }
+
+        .post-menu {
+            color: #65676b;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Post Content */
+        .post-content {
+            display: flex;
+            gap: 0;
+        }
+
+        /* Left Side - Schedule */
+        .schedule-side {
+            flex: 1;
+            padding: 24px;
+            background: linear-gradient(180deg, #fff 0%, #fafafa 100%);
+        }
+
+        .schedule-header {
+            margin-bottom: 20px;
+        }
+
+        .schedule-header h2 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--dms-black);
+            margin-bottom: 6px;
+        }
+
+        .schedule-date {
+            font-size: 0.85rem;
+            color: #65676b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .event-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .event-item {
+            display: flex;
+            gap: 14px;
+            padding: 14px;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e4e6eb;
+            transition: all 0.2s ease;
+        }
+
+        .event-item:hover {
+            border-color: var(--dms-red);
+            box-shadow: 0 4px 15px rgba(240, 85, 69, 0.1);
+            transform: translateX(4px);
+        }
+
+        .event-time {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 55px;
+            padding: 8px;
+            background: var(--dms-black);
+            border-radius: 8px;
+        }
+
+        .event-time-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .event-time-period {
+            font-size: 0.65rem;
+            color: var(--dms-red);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .event-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .event-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dms-black);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .event-emoji {
+            font-size: 1rem;
+        }
+
+        .event-meta {
+            font-size: 0.75rem;
+            color: #65676b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .event-location {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .event-cost {
+            padding: 2px 8px;
+            background: #e7f5ff;
+            color: #0077b6;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .event-cost.free {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .event-cost.members {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Right Side - Image */
+        .image-side {
+            width: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 400px;
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            color: #fff;
+        }
+
+        .image-overlay-logo {
+            width: 50px;
+            height: auto;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+        }
+
+        .image-overlay-text {
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .image-overlay-sub {
+            font-size: 0.8rem;
+            opacity: 0.85;
+            margin-top: 4px;
+        }
+
+        /* Calendar Link */
+        .calendar-link {
+            text-align: center;
+            padding: 16px 20px;
+            background: var(--dms-red);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .calendar-link:hover {
+            background: #d94535;
+        }
+
+        /* Post Footer */
+        .post-footer {
+            padding: 12px 20px;
+            border-top: 1px solid #e4e6eb;
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: #65676b;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .post-action:hover {
+            background: #f0f2f5;
+        }
+
+        .post-action-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Platform Tabs */
+        .platform-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .platform-tab {
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .platform-tab.facebook {
+            background: linear-gradient(135deg, #1877f2 0%, #0d5bbd 100%);
+            color: #fff;
+        }
+
+        .platform-tab.instagram {
+            background: rgba(255, 255, 255, 0.05);
+            color: #888;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .platform-tab.instagram:hover {
+            border-color: #e1306c;
+            color: #fff;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 60px;
+            padding: 30px;
+            background: rgba(240, 85, 69, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(240, 85, 69, 0.15);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dms-red);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-bottom: 40px;
+            color: #444;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--dms-red);
+            text-decoration: none;
+        }
+
+        /* ==================== */
+        /* DOCUMENTATION STYLES */
+        /* ==================== */
+
+        .docs-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .docs-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .docs-header h1 {
+            font-size: 2.5rem;
+        }
+
+        .docs-section {
+            margin-bottom: 50px;
+        }
+
+        .docs-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dms-red);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(240, 85, 69, 0.2);
+        }
+
+        .docs-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 25px 0 15px 0;
+        }
+
+        .docs-section p {
+            color: #999;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .docs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .docs-table th,
+        .docs-table td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .docs-table th {
+            background: rgba(240, 85, 69, 0.1);
+            color: var(--dms-red);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .docs-table td {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .docs-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .docs-table code {
+            background: rgba(240, 85, 69, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--dms-red);
+        }
+
+        .code-block {
+            background: #0d0d0d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #ccc;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .code-block .comment {
+            color: #666;
+        }
+
+        .code-block .keyword {
+            color: var(--dms-red);
+        }
+
+        .code-block .string {
+            color: #98c379;
+        }
+
+        .file-tree {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #888;
+            line-height: 1.8;
+        }
+
+        .file-tree .folder {
+            color: var(--dms-red);
+        }
+
+        .file-tree .file {
+            color: #ccc;
+        }
+
+        .steps-list {
+            counter-reset: step;
+            list-style: none;
+            padding: 0;
+        }
+
+        .steps-list li {
+            counter-increment: step;
+            padding: 20px 20px 20px 70px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            position: relative;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .steps-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            background: var(--dms-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        .steps-list li strong {
+            color: #fff;
+        }
+
+        .alert-box {
+            background: rgba(240, 85, 69, 0.1);
+            border: 1px solid rgba(240, 85, 69, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #ccc;
+        }
+
+        .alert-box strong {
+            color: var(--dms-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 750px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .main-nav-inner {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .nav-logo {
+                padding: 12px 0;
+            }
+
+            .nav-tabs {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-tab {
+                padding: 15px 20px;
+            }
+
+            .flow-wrapper {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+
+            .post-content {
+                flex-direction: column-reverse;
+            }
+
+            .image-side {
+                width: 100%;
+            }
+
+            .post-image {
+                min-height: 200px;
+            }
+
+            .stats-bar {
+                flex-wrap: wrap;
+                gap: 30px;
+            }
+
+            .docs-table {
+                font-size: 0.8rem;
+            }
+
+            .docs-table th,
+            .docs-table td {
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="main-nav-inner">
+            <div class="nav-logo">
+                <img src="dallasmakerspace.png" alt="DMS">
+                <span>Daily Social Poster</span>
+            </div>
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="showTab('overview')">Overview</div>
+                <div class="nav-tab" onclick="showTab('docs')">Documentation</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Overview Tab -->
+    <div id="overview" class="tab-content active">
+        <div class="container">
+            <!-- Header -->
+            <header>
+                <img src="dallasmakerspace.png" alt="Dallas Makerspace" class="header-logo">
+                <h1>Daily Social Poster</h1>
+                <p class="subtitle">Automatically share today's classes and events on Facebook & Instagram every morning</p>
+            </header>
+
+            <!-- Flow Section -->
+            <section class="flow-section">
+                <div class="section-label">
+                    <span>Automation Flow</span>
+                </div>
+
+                <div class="flow-wrapper">
+                    <div class="flow-item">
+                        <div class="flow-icon trigger">&#9201;</div>
+                        <div class="flow-label">7 AM Daily</div>
+                        <div class="flow-sublabel">GitHub Actions</div>
+                    </div>
+
+                    <div class="flow-arrow">&#10132;</div>
+
+                    <div class="flow-item">
+                        <div class="flow-icon source">&#128240;</div>
+                        <div class="flow-label">RSS Feed</div>
+                        <div class="flow-sublabel">Calendar Events</div>
+                    </div>
+
+                    <div class="flow-arrow">&#10132;</div>
+
+                    <div class="flow-item">
+                        <div class="flow-icon process">&#9881;</div>
+                        <div class="flow-label">Process</div>
+                        <div class="flow-sublabel">Filter & Format</div>
+                    </div>
+
+                    <div class="flow-arrow">&#10132;</div>
+
+                    <div class="flow-split">
+                        <div class="flow-branch">
+                            <div class="flow-icon facebook" style="width:50px;height:50px;font-size:1.3rem;border-radius:14px;">f</div>
+                            <div class="flow-label">Facebook</div>
+                        </div>
+                        <div class="flow-branch">
+                            <div class="flow-icon instagram" style="width:50px;height:50px;font-size:1.3rem;border-radius:14px;">&#128247;</div>
+                            <div class="flow-label">Instagram</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Post Mockup Section -->
+            <section class="mockup-section">
+                <div class="section-label">
+                    <span>Post Preview</span>
+                </div>
+
+                <div class="platform-tabs">
+                    <div class="platform-tab facebook">Facebook</div>
+                    <div class="platform-tab instagram">Instagram</div>
+                </div>
+
+                <div class="post-container">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="dallasmakerspace.png" alt="DMS">
+                        </div>
+                        <div class="post-meta">
+                            <div class="post-author">
+                                Dallas Makerspace
+                                <span class="verified-badge">&#10003;</span>
+                            </div>
+                            <div class="post-time">Today at 7:00 AM &middot; &#127758;</div>
+                        </div>
+                        <div class="post-menu">&middot;&middot;&middot;</div>
+                    </div>
+
+                    <div class="post-content">
+                        <div class="schedule-side">
+                            <div class="schedule-header">
+                                <h2>&#128197; Check Out Today's Classes!</h2>
+                                <div class="schedule-date">
+                                    <span>&#128205;</span>
+                                    Monday, April 28, 2026
+                                </div>
+                            </div>
+
+                            <div class="event-list">
+                                <div class="event-item">
+                                    <div class="event-time">
+                                        <div class="event-time-value">10:00</div>
+                                        <div class="event-time-period">AM</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">
+                                            <span class="event-emoji">&#127912;</span>
+                                            Intro to Ceramics
+                                        </div>
+                                        <div class="event-meta">
+                                            <span class="event-location">&#128205; Ceramics Room</span>
+                                            <span class="event-cost">$25</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="event-item">
+                                    <div class="event-time">
+                                        <div class="event-time-value">2:00</div>
+                                        <div class="event-time-period">PM</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">
+                                            <span class="event-emoji">&#128295;</span>
+                                            Woodworking 101
+                                        </div>
+                                        <div class="event-meta">
+                                            <span class="event-location">&#128205; Wood Shop</span>
+                                            <span class="event-cost free">Free</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="event-item">
+                                    <div class="event-time">
+                                        <div class="event-time-value">6:00</div>
+                                        <div class="event-time-period">PM</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">
+                                            <span class="event-emoji">&#9889;</span>
+                                            Laser Cutter Training
+                                        </div>
+                                        <div class="event-meta">
+                                            <span class="event-location">&#128205; Laser Lab</span>
+                                            <span class="event-cost members">Members</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="event-item">
+                                    <div class="event-time">
+                                        <div class="event-time-value">7:30</div>
+                                        <div class="event-time-period">PM</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">
+                                            <span class="event-emoji">&#128187;</span>
+                                            Arduino Night
+                                        </div>
+                                        <div class="event-meta">
+                                            <span class="event-location">&#128205; Electronics Lab</span>
+                                            <span class="event-cost free">Free</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="image-side">
+                            <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&h=800&fit=crop" alt="Makerspace" class="post-image">
+                            <div class="image-overlay">
+                                <img src="dallasmakerspace.png" alt="DMS" class="image-overlay-logo">
+                                <div class="image-overlay-text">Dallas Makerspace</div>
+                                <div class="image-overlay-sub">Make Something Amazing</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="calendar-link">
+                        &#128279; View full calendar at calendar.dallasmakerspace.org
+                    </div>
+
+                    <div class="post-footer">
+                        <div class="post-action">
+                            <span class="post-action-icon">&#128077;</span>
+                            Like
+                        </div>
+                        <div class="post-action">
+                            <span class="post-action-icon">&#128172;</span>
+                            Comment
+                        </div>
+                        <div class="post-action">
+                            <span class="post-action-icon">&#8599;</span>
+                            Share
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-value">$0</div>
+                    <div class="stat-label">Monthly Cost</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">7:00 AM</div>
+                    <div class="stat-label">Daily Post</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">Platforms</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Automated</div>
+                </div>
+            </div>
+
+            <!-- Tech Stack -->
+            <div class="tech-stack">
+                <div class="tech-badge">Node.js</div>
+                <div class="tech-badge">GitHub Actions</div>
+                <div class="tech-badge">Meta Graph API</div>
+                <div class="tech-badge">RSS Parser</div>
+            </div>
+
+            <footer>
+                <p>Project: <a href="#">~/Desktop/dms-social-poster/</a></p>
+                <p style="margin-top: 8px; opacity: 0.7;">Powered by GitHub Actions &middot; $0/month</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Documentation Tab -->
+    <div id="docs" class="tab-content">
+        <div class="container docs-container">
+            <div class="docs-header">
+                <img src="dallasmakerspace.png" alt="Dallas Makerspace" class="header-logo">
+                <h1>Full Documentation</h1>
+                <p class="subtitle">Complete setup guide and technical reference</p>
+            </div>
+
+            <!-- Project Summary -->
+            <section class="docs-section">
+                <h2>Project Summary</h2>
+                <table class="docs-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Purpose</td>
+                        <td>Automatically post daily events to Facebook and Instagram</td>
+                    </tr>
+                    <tr>
+                        <td>Data Source</td>
+                        <td><code>calendar.dallasmakerspace.org/events/feed/rss</code></td>
+                    </tr>
+                    <tr>
+                        <td>Platforms</td>
+                        <td>Facebook Page + Instagram Business</td>
+                    </tr>
+                    <tr>
+                        <td>Schedule</td>
+                        <td>Daily at 7:00 AM Central</td>
+                    </tr>
+                    <tr>
+                        <td>Hosting</td>
+                        <td>GitHub Actions (free)</td>
+                    </tr>
+                    <tr>
+                        <td>Language</td>
+                        <td>Node.js</td>
+                    </tr>
+                    <tr>
+                        <td>Cost</td>
+                        <td><strong>$0/month</strong></td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Project Files -->
+            <section class="docs-section">
+                <h2>Project Files</h2>
+                <p>Location: <code>~/Desktop/dms-social-poster/</code></p>
+                <div class="file-tree">
+                    <span class="folder">dms-social-poster/</span><br>
+                    ├── <span class="folder">.github/workflows/</span><br>
+                    │   └── <span class="file">daily-post.yml</span> &nbsp;&nbsp;<span style="color:#666"># GitHub Actions cron</span><br>
+                    ├── <span class="folder">src/</span><br>
+                    │   ├── <span class="file">index.js</span> &nbsp;&nbsp;<span style="color:#666"># Main entry point</span><br>
+                    │   ├── <span class="file">fetchEvents.js</span> &nbsp;&nbsp;<span style="color:#666"># RSS parser</span><br>
+                    │   ├── <span class="file">filterToday.js</span> &nbsp;&nbsp;<span style="color:#666"># Date filtering</span><br>
+                    │   ├── <span class="file">formatPost.js</span> &nbsp;&nbsp;<span style="color:#666"># Post formatter</span><br>
+                    │   ├── <span class="file">postToFacebook.js</span> &nbsp;&nbsp;<span style="color:#666"># FB Graph API</span><br>
+                    │   └── <span class="file">postToInstagram.js</span> &nbsp;&nbsp;<span style="color:#666"># IG Graph API</span><br>
+                    ├── <span class="file">.env.example</span><br>
+                    ├── <span class="file">.gitignore</span><br>
+                    ├── <span class="file">package.json</span><br>
+                    └── <span class="file">README.md</span>
+                </div>
+            </section>
+
+            <!-- Quick Start -->
+            <section class="docs-section">
+                <h2>Quick Start</h2>
+
+                <h3>1. Test Locally</h3>
+                <div class="code-block">
+                    <pre><span class="keyword">cd</span> ~/Desktop/dms-social-poster
+<span class="keyword">npm</span> install
+<span class="keyword">npm</span> test   <span class="comment"># Dry run - see what would post</span></pre>
+                </div>
+
+                <h3>2. Set Up Meta API</h3>
+                <ol class="steps-list">
+                    <li>Go to <strong>developers.facebook.com</strong> and create a new app (Business type)</li>
+                    <li>Add <strong>Facebook Login</strong> and <strong>Instagram Graph API</strong> products</li>
+                    <li>Use <strong>Graph API Explorer</strong> to get Page Access Token with permissions: <code>pages_manage_posts</code>, <code>instagram_content_publish</code></li>
+                    <li>Note your <strong>Page ID</strong> and <strong>Instagram Business Account ID</strong></li>
+                </ol>
+
+                <h3>3. Push to GitHub</h3>
+                <div class="code-block">
+                    <pre><span class="keyword">cd</span> ~/Desktop/dms-social-poster
+<span class="keyword">git</span> init && git add . && git commit -m <span class="string">"Initial commit"</span>
+<span class="keyword">gh</span> repo create dms-social-poster --private --source=. --push</pre>
+                </div>
+
+                <h3>4. Add Secrets</h3>
+                <p>Go to your repo &rarr; Settings &rarr; Secrets &rarr; Actions:</p>
+                <table class="docs-table">
+                    <tr>
+                        <th>Secret Name</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td><code>META_PAGE_ACCESS_TOKEN</code></td>
+                        <td>Your Page Access Token</td>
+                    </tr>
+                    <tr>
+                        <td><code>META_PAGE_ID</code></td>
+                        <td>Your Facebook Page ID</td>
+                    </tr>
+                    <tr>
+                        <td><code>META_IG_USER_ID</code></td>
+                        <td>Your Instagram Business Account ID</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- RSS Feed Data -->
+            <section class="docs-section">
+                <h2>RSS Feed Data</h2>
+                <p>URL: <code>https://calendar.dallasmakerspace.org/events/feed/rss</code></p>
+                <table class="docs-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>title</td>
+                        <td>"Laser Cutter Training"</td>
+                    </tr>
+                    <tr>
+                        <td>when</td>
+                        <td>"Monday, April 28, 2026 6:00pm - 8:00pm CDT"</td>
+                    </tr>
+                    <tr>
+                        <td>where</td>
+                        <td>"Laser Lab"</td>
+                    </tr>
+                    <tr>
+                        <td>cost</td>
+                        <td>"Free for members"</td>
+                    </tr>
+                    <tr>
+                        <td>category</td>
+                        <td>Class, Event, Workshop, etc.</td>
+                    </tr>
+                    <tr>
+                        <td>image</td>
+                        <td>URL to event image (optional)</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Schedule -->
+            <section class="docs-section">
+                <h2>Schedule</h2>
+                <table class="docs-table">
+                    <tr>
+                        <th>Time</th>
+                        <th>Timezone</th>
+                    </tr>
+                    <tr>
+                        <td>7:00 AM</td>
+                        <td>Central Time (Chicago)</td>
+                    </tr>
+                    <tr>
+                        <td>12:00 PM</td>
+                        <td>UTC</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 15px;">To change the time, edit <code>.github/workflows/daily-post.yml</code>:</p>
+                <div class="code-block">
+                    <pre><span class="keyword">cron:</span> <span class="string">'0 12 * * *'</span>  <span class="comment"># 12:00 UTC = 7 AM Central</span></pre>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section class="docs-section">
+                <h2>Troubleshooting</h2>
+                <table class="docs-table">
+                    <tr>
+                        <th>Issue</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td>"Invalid OAuth access token"</td>
+                        <td>Token expired - generate new token</td>
+                    </tr>
+                    <tr>
+                        <td>"Pages API access denied"</td>
+                        <td>Re-authorize with correct permissions</td>
+                    </tr>
+                    <tr>
+                        <td>"Instagram container error"</td>
+                        <td>Ensure image is publicly hosted</td>
+                    </tr>
+                    <tr>
+                        <td>No events posting</td>
+                        <td>Check RSS feed has today's events</td>
+                    </tr>
+                </table>
+
+                <h3>Debug Commands</h3>
+                <div class="code-block">
+                    <pre><span class="comment"># Test RSS feed</span>
+<span class="keyword">curl</span> -s <span class="string">"https://calendar.dallasmakerspace.org/events/feed/rss"</span> | head -50
+
+<span class="comment"># Test Facebook API</span>
+<span class="keyword">curl</span> <span class="string">"https://graph.facebook.com/v18.0/me?access_token=YOUR_TOKEN"</span>
+
+<span class="comment"># Check token permissions</span>
+<span class="keyword">curl</span> <span class="string">"https://graph.facebook.com/v18.0/me/permissions?access_token=YOUR_TOKEN"</span></pre>
+                </div>
+            </section>
+
+            <!-- Token Management -->
+            <section class="docs-section">
+                <h2>Token Management</h2>
+                <div class="alert-box">
+                    <strong>Important:</strong> Page Access Tokens from Graph API Explorer expire after ~60 days. Set a calendar reminder to refresh.
+                </div>
+                <p>For permanent tokens, use System User tokens via Business Manager (Settings &rarr; Users &rarr; System Users).</p>
+            </section>
+
+            <!-- Cost Breakdown -->
+            <section class="docs-section">
+                <h2>Cost Breakdown</h2>
+                <table class="docs-table">
+                    <tr>
+                        <th>Component</th>
+                        <th>Cost</th>
+                    </tr>
+                    <tr>
+                        <td>GitHub Actions</td>
+                        <td>Free (2,000 min/month)</td>
+                    </tr>
+                    <tr>
+                        <td>Meta Graph API</td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td>Hosting</td>
+                        <td>None required</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td><strong>$0/month</strong></td>
+                    </tr>
+                </table>
+            </section>
+
+            <footer>
+                <p>Dallas Makerspace Social Media Automation</p>
+                <p style="margin-top: 8px; opacity: 0.7;">Project: ~/Desktop/dms-social-poster/</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(navTab => {
+                navTab.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
