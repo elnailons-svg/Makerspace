@@ -720,6 +720,276 @@
             font-size: 0.85rem;
         }
 
+        /* Reels Mockup Styles */
+        .reels-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .reel-phone {
+            width: 320px;
+            height: 640px;
+            background: #000;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.5),
+                0 0 0 2px #333,
+                inset 0 0 0 2px #1a1a1a;
+            position: relative;
+        }
+
+        .reel-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+        }
+
+        .reel-notch {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 25px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 20;
+        }
+
+        .reel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .reel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(0,0,0,0.3) 0%,
+                transparent 20%,
+                transparent 50%,
+                rgba(0,0,0,0.8) 100%
+            );
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .reel-header {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .reel-logo {
+            width: 100px;
+            filter: brightness(0) invert(1);
+        }
+
+        .reel-content {
+            margin-bottom: 80px;
+        }
+
+        .reel-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .reel-events {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .reel-event {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #fff;
+        }
+
+        .reel-event-time {
+            font-size: 0.85rem;
+            font-weight: 700;
+            min-width: 65px;
+            color: var(--dms-red);
+        }
+
+        .reel-event-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .reel-event-emoji {
+            font-size: 1.2rem;
+        }
+
+        .reel-sidebar {
+            position: absolute;
+            right: 12px;
+            bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .reel-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #fff;
+        }
+
+        .reel-action-icon {
+            font-size: 1.6rem;
+        }
+
+        .reel-action-count {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .reel-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .reel-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .reel-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .reel-username {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex: 1;
+        }
+
+        .reel-follow-btn {
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .reel-caption-preview {
+            position: absolute;
+            bottom: 60px;
+            left: 16px;
+            right: 60px;
+            color: #fff;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .reel-music {
+            position: absolute;
+            bottom: 16px;
+            left: 70px;
+            right: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        .reel-music-icon {
+            font-size: 1rem;
+        }
+
+        /* Reels info section */
+        .reels-info {
+            max-width: 500px;
+            margin: 40px auto 0;
+            text-align: center;
+        }
+
+        .reels-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .reels-info p {
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .reels-specs {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .reels-spec {
+            text-align: center;
+        }
+
+        .reels-spec-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dms-red);
+        }
+
+        .reels-spec-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* Stats Bar */
         .stats-bar {
             display: flex;
@@ -1041,6 +1311,7 @@
             </div>
             <div class="nav-tabs">
                 <div class="nav-tab active" onclick="showTab('overview')">Overview</div>
+                <div class="nav-tab" onclick="showTab('reels')">Reels Mockup</div>
                 <div class="nav-tab" onclick="showTab('docs')">Documentation</div>
             </div>
         </div>
@@ -1314,6 +1585,128 @@
         </div>
     </div>
 
+    <!-- Reels Mockup Tab -->
+    <div id="reels" class="tab-content">
+        <div class="container">
+            <header>
+                <img src="dallasmakerspace.png" alt="Dallas Makerspace" class="header-logo">
+                <h1>Reels / Stories</h1>
+                <p class="subtitle">9:16 vertical format for maximum mobile engagement</p>
+            </header>
+
+            <div class="reels-container">
+                <div class="reel-phone">
+                    <div class="reel-screen">
+                        <div class="reel-notch"></div>
+                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&h=1200&fit=crop" alt="Makerspace" class="reel-image">
+
+                        <div class="reel-overlay">
+                            <div class="reel-header">
+                                <span>Reels</span>
+                                <span>&#128247;</span>
+                            </div>
+
+                            <div class="reel-content">
+                                <div class="reel-title">&#128197; Today's Classes</div>
+                                <div class="reel-events">
+                                    <div class="reel-event">
+                                        <span class="reel-event-emoji">&#127912;</span>
+                                        <span class="reel-event-time">10:00 AM</span>
+                                        <span class="reel-event-name">Intro to Ceramics</span>
+                                    </div>
+                                    <div class="reel-event">
+                                        <span class="reel-event-emoji">&#128295;</span>
+                                        <span class="reel-event-time">2:00 PM</span>
+                                        <span class="reel-event-name">Woodworking 101</span>
+                                    </div>
+                                    <div class="reel-event">
+                                        <span class="reel-event-emoji">&#9889;</span>
+                                        <span class="reel-event-time">6:00 PM</span>
+                                        <span class="reel-event-name">Laser Training</span>
+                                    </div>
+                                    <div class="reel-event">
+                                        <span class="reel-event-emoji">&#128187;</span>
+                                        <span class="reel-event-time">7:30 PM</span>
+                                        <span class="reel-event-name">Arduino Night</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="reel-sidebar">
+                                <div class="reel-action">
+                                    <span class="reel-action-icon">&#9825;</span>
+                                    <span class="reel-action-count">1.2K</span>
+                                </div>
+                                <div class="reel-action">
+                                    <span class="reel-action-icon">&#128172;</span>
+                                    <span class="reel-action-count">48</span>
+                                </div>
+                                <div class="reel-action">
+                                    <span class="reel-action-icon">&#9993;</span>
+                                    <span class="reel-action-count">Share</span>
+                                </div>
+                                <div class="reel-action">
+                                    <span class="reel-action-icon">&middot;&middot;&middot;</span>
+                                </div>
+                            </div>
+
+                            <div class="reel-bottom">
+                                <div class="reel-avatar">
+                                    <img src="dallasmakerspace.png" alt="DMS">
+                                </div>
+                                <span class="reel-username">dallasmakerspace</span>
+                                <div class="reel-follow-btn">Follow</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reels-info">
+                <h3>API Support</h3>
+                <p>Reels can be posted via the Meta Graph API. Stories cannot be posted via API but can be scheduled through Meta Business Suite (free).</p>
+
+                <div class="reels-specs">
+                    <div class="reels-spec">
+                        <div class="reels-spec-value">9:16</div>
+                        <div class="reels-spec-label">Aspect Ratio</div>
+                    </div>
+                    <div class="reels-spec">
+                        <div class="reels-spec-value">1080x1920</div>
+                        <div class="reels-spec-label">Resolution</div>
+                    </div>
+                    <div class="reels-spec">
+                        <div class="reels-spec-value">3-90s</div>
+                        <div class="reels-spec-label">Duration</div>
+                    </div>
+                    <div class="reels-spec">
+                        <div class="reels-spec-value">1GB</div>
+                        <div class="reels-spec-label">Max Size</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-bar" style="margin-top: 50px;">
+                <div class="stat">
+                    <div class="stat-value">Reels</div>
+                    <div class="stat-label">API Supported</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">Stories</div>
+                    <div class="stat-label">Business Suite Only</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">Free</div>
+                    <div class="stat-label">Meta Business Suite</div>
+                </div>
+            </div>
+
+            <footer>
+                <p>Meta Business Suite: <a href="https://business.facebook.com" target="_blank">business.facebook.com</a></p>
+            </footer>
+        </div>
+    </div>
+
     <!-- Documentation Tab -->
     <div id="docs" class="tab-content">
         <div class="container docs-container">
@@ -1537,6 +1930,119 @@
                     <strong>Important:</strong> Page Access Tokens from Graph API Explorer expire after ~60 days. Set a calendar reminder to refresh.
                 </div>
                 <p>For permanent tokens, use System User tokens via Business Manager (Settings &rarr; Users &rarr; System Users).</p>
+            </section>
+
+            <!-- Posting Formats -->
+            <section class="docs-section">
+                <h2>Posting Formats</h2>
+                <table class="docs-table">
+                    <tr>
+                        <th>Format</th>
+                        <th>API Support</th>
+                        <th>Aspect Ratio</th>
+                        <th>Notes</th>
+                    </tr>
+                    <tr>
+                        <td>Feed Posts</td>
+                        <td>Yes</td>
+                        <td>1:1, 4:5, 16:9</td>
+                        <td>Images or videos</td>
+                    </tr>
+                    <tr>
+                        <td>Reels</td>
+                        <td>Yes</td>
+                        <td>9:16 vertical</td>
+                        <td>3-90 seconds, max 1GB</td>
+                    </tr>
+                    <tr>
+                        <td>Stories</td>
+                        <td><strong>No</strong></td>
+                        <td>9:16 vertical</td>
+                        <td>Use Meta Business Suite</td>
+                    </tr>
+                    <tr>
+                        <td>Carousels</td>
+                        <td>Yes</td>
+                        <td>1:1, 4:5</td>
+                        <td>Up to 10 images</td>
+                    </tr>
+                </table>
+
+                <h3>Posting Reels via API</h3>
+                <div class="code-block">
+                    <pre><span class="comment">// Post a Reel</span>
+<span class="keyword">const</span> response = <span class="keyword">await</span> fetch(
+  <span class="string">`https://graph.facebook.com/v18.0/${igUserId}/media`</span>,
+  {
+    method: <span class="string">'POST'</span>,
+    body: JSON.stringify({
+      media_type: <span class="string">'REELS'</span>,
+      video_url: <span class="string">'https://example.com/video.mp4'</span>,
+      caption: <span class="string">'Today at Dallas Makerspace!'</span>,
+      access_token: accessToken
+    })
+  }
+);</pre>
+                </div>
+            </section>
+
+            <!-- Meta Business Suite -->
+            <section class="docs-section">
+                <h2>Meta Business Suite</h2>
+                <div class="alert-box">
+                    <strong>100% Free</strong> - Meta Business Suite is completely free to use for scheduling and managing posts.
+                </div>
+
+                <table class="docs-table">
+                    <tr>
+                        <th>Feature</th>
+                        <th>Cost</th>
+                    </tr>
+                    <tr>
+                        <td>Schedule posts (FB + IG)</td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td>Schedule Stories</td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td>Schedule Reels</td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td>Analytics / Insights</td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td>Inbox management</td>
+                        <td>Free</td>
+                    </tr>
+                </table>
+
+                <h3>Access</h3>
+                <p><strong>Web:</strong> <code>business.facebook.com</code></p>
+                <p><strong>Mobile:</strong> "Meta Business Suite" app (iOS / Android)</p>
+
+                <h3>Hybrid Approach</h3>
+                <table class="docs-table">
+                    <tr>
+                        <th>Content Type</th>
+                        <th>Method</th>
+                    </tr>
+                    <tr>
+                        <td>Daily feed posts</td>
+                        <td>Automated (GitHub Action)</td>
+                    </tr>
+                    <tr>
+                        <td>Stories</td>
+                        <td>Manual via Meta Business Suite</td>
+                    </tr>
+                    <tr>
+                        <td>Reels</td>
+                        <td>Either (API or Business Suite)</td>
+                    </tr>
+                </table>
             </section>
 
             <!-- Cost Breakdown -->
