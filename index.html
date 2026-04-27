@@ -671,6 +671,154 @@
 
         .alert-box strong { color: var(--dms-red); }
 
+        /* Clickable posts */
+        .post-square,
+        .post-story {
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .post-square:hover,
+        .post-story:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+        }
+
+        /* Modal Lightbox */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            cursor: default;
+        }
+
+        .modal-post {
+            width: 500px;
+            height: 500px;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 100px rgba(0,0,0,0.8);
+        }
+
+        .modal-post.story {
+            width: 400px;
+            height: 711px;
+        }
+
+        .modal-post .post-bg {
+            filter: brightness(0.85);
+        }
+
+        .modal-post .post-content {
+            padding: 35px;
+        }
+
+        .modal-post .post-header-logo {
+            width: 100px;
+        }
+
+        .modal-post .post-title {
+            font-size: 2rem;
+        }
+
+        .modal-post .post-subtitle {
+            font-size: 1rem;
+        }
+
+        .modal-post .card {
+            padding: 20px 24px;
+            margin: 0 20px;
+        }
+
+        .modal-post .card-title {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .modal-post .table-header {
+            grid-template-columns: 70px 1fr 55px;
+            padding-bottom: 10px;
+            margin-bottom: 8px;
+        }
+
+        .modal-post .table-header span {
+            font-size: 0.7rem;
+        }
+
+        .modal-post .table-row {
+            grid-template-columns: 70px 1fr 55px;
+            padding: 10px 0;
+        }
+
+        .modal-post .row-time {
+            font-size: 0.9rem;
+        }
+
+        .modal-post .row-event {
+            font-size: 0.95rem;
+        }
+
+        .modal-post .row-location {
+            font-size: 0.7rem;
+        }
+
+        .modal-post .row-cost {
+            font-size: 0.75rem;
+        }
+
+        .modal-post .card-footer {
+            font-size: 0.7rem;
+            margin-top: 12px;
+            padding-top: 12px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            color: #fff;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .modal-hint {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #666;
+            font-size: 0.8rem;
+        }
+
         /* Responsive */
         @media (max-width: 750px) {
             h1 { font-size: 2rem; }
@@ -680,6 +828,8 @@
             .flow-arrow { transform: rotate(90deg); }
             .post-square { width: 100%; max-width: 400px; height: auto; aspect-ratio: 1; }
             .stats-bar { flex-wrap: wrap; gap: 30px; }
+            .modal-post { width: 100%; max-width: 400px; height: auto; aspect-ratio: 1; }
+            .modal-post.story { width: 100%; max-width: 300px; height: auto; aspect-ratio: 9/16; }
         }
     </style>
 </head>
@@ -1090,6 +1240,15 @@ npm test   # Dry run - see what would post</pre>
         </div>
     </div>
 
+    <!-- Modal Lightbox -->
+    <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal(event)">ESC to close</button>
+            <div class="modal-post" id="modal-post"></div>
+            <div class="modal-hint">Click anywhere to close</div>
+        </div>
+    </div>
+
     <script>
         function showTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -1098,6 +1257,47 @@ npm test   # Dry run - see what would post</pre>
             event.target.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // Modal functionality
+        function openModal(postElement) {
+            const modal = document.getElementById('modal');
+            const modalPost = document.getElementById('modal-post');
+
+            // Clone the post content
+            modalPost.innerHTML = postElement.innerHTML;
+
+            // Check if it's a story format
+            if (postElement.classList.contains('post-story')) {
+                modalPost.classList.add('story');
+            } else {
+                modalPost.classList.remove('story');
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            // Only close if clicking overlay or close button
+            if (event.target.classList.contains('modal-overlay') ||
+                event.target.classList.contains('modal-close')) {
+                document.getElementById('modal').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Add click handlers to all posts
+        document.querySelectorAll('.post-square, .post-story').forEach(post => {
+            post.addEventListener('click', () => openModal(post));
+        });
+
+        // ESC key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('modal').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
     </script>
 </body>
 </html>
