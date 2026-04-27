@@ -262,56 +262,60 @@
             position: relative;
             z-index: 1;
             height: 100%;
-            padding: 30px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
 
         .post-header {
+            text-align: center;
             color: #fff;
-            margin-bottom: auto;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            padding-top: 10px;
         }
 
         .post-header-logo {
-            width: 40px;
+            width: 45px;
             height: auto;
+            margin-bottom: 15px;
         }
 
-        .post-header-text {
+        .post-headline {
+            flex: 1;
             display: flex;
             flex-direction: column;
-        }
-
-        .post-brand {
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            opacity: 0.9;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            padding: 20px 10px;
         }
 
         .post-title {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            margin-top: 2px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .post-subtitle {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
 
         .card {
-            background: rgba(255,255,255,0.97);
+            background: rgba(250, 248, 245, 0.98);
             border-radius: 12px;
             padding: 18px 20px;
             display: flex;
             flex-direction: column;
             color: #1a1a1a;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 -5px 40px rgba(0,0,0,0.2);
         }
 
         .card-title {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 12px;
         }
@@ -399,15 +403,20 @@
         }
 
         .post-story .post-header-logo {
-            width: 32px;
+            width: 35px;
+            margin-bottom: 10px;
         }
 
-        .post-story .post-brand {
-            font-size: 0.65rem;
+        .post-story .post-headline {
+            padding: 15px 5px;
         }
 
         .post-story .post-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+        }
+
+        .post-story .post-subtitle {
+            font-size: 0.75rem;
         }
 
         .post-story .card {
@@ -728,10 +737,10 @@
                         <div class="post-content">
                             <div class="post-header">
                                 <img src="dallasmakerspace.png" alt="DMS" class="post-header-logo">
-                                <div class="post-header-text">
-                                    <div class="post-brand">Dallas Makerspace</div>
-                                    <div class="post-title">Today's Classes</div>
-                                </div>
+                            </div>
+                            <div class="post-headline">
+                                <div class="post-title">Today's Classes<br>at Dallas Makerspace</div>
+                                <div class="post-subtitle">See what's happening</div>
                             </div>
                             <div class="card">
                                 <div class="card-title">Monday, April 28</div>
@@ -788,10 +797,10 @@
                         <div class="post-content">
                             <div class="post-header">
                                 <img src="dallasmakerspace.png" alt="DMS" class="post-header-logo">
-                                <div class="post-header-text">
-                                    <div class="post-brand">Dallas Makerspace</div>
-                                    <div class="post-title">Today's Classes</div>
-                                </div>
+                            </div>
+                            <div class="post-headline">
+                                <div class="post-title">Today's Classes</div>
+                                <div class="post-subtitle">See what's happening</div>
                             </div>
                             <div class="card">
                                 <div class="card-title">Monday, Apr 28</div>
@@ -886,10 +895,10 @@
                         <div class="post-content">
                             <div class="post-header">
                                 <img src="dallasmakerspace.png" alt="DMS" class="post-header-logo">
-                                <div class="post-header-text">
-                                    <div class="post-brand">Dallas Makerspace</div>
-                                    <div class="post-title">Today's Classes</div>
-                                </div>
+                            </div>
+                            <div class="post-headline">
+                                <div class="post-title">Today's Classes</div>
+                                <div class="post-subtitle">See what's happening</div>
                             </div>
                             <div class="card">
                                 <div class="card-title">Monday, April 28</div>
