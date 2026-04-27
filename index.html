@@ -256,7 +256,7 @@
             background-image: url('./images/MS360_Screenshot-35.jpg');
             background-size: cover;
             background-position: center;
-            filter: brightness(0.5);
+            filter: brightness(0.85);
         }
 
         .post-bg.welding {
@@ -287,7 +287,7 @@
         }
 
         .post-header-logo {
-            width: 45px;
+            width: 80px;
             height: auto;
             margin-bottom: 15px;
         }
@@ -418,7 +418,7 @@
         }
 
         .post-story .post-header-logo {
-            width: 35px;
+            width: 60px;
             margin-bottom: 10px;
         }
 
@@ -705,7 +705,7 @@
             <header>
                 <img src="dallasmakerspace.png" alt="Dallas Makerspace" class="header-logo">
                 <h1>Daily Social Poster</h1>
-                <p class="subtitle">Automatically share today's classes and events on Facebook & Instagram every morning</p>
+                <p class="subtitle">Automatically share daily classes and events on Facebook & Instagram — 8 AM for today, 8 PM for tomorrow</p>
             </header>
 
             <!-- Flow Section -->
@@ -713,7 +713,7 @@
             <div class="flow-wrapper">
                 <div class="flow-item">
                     <div class="flow-icon trigger">&#9201;</div>
-                    <div class="flow-label">7 AM Daily</div>
+                    <div class="flow-label">8 AM + 8 PM</div>
                     <div class="flow-sublabel">GitHub Actions</div>
                 </div>
                 <div class="flow-arrow">&#10132;</div>
@@ -742,11 +742,11 @@
             </div>
 
             <!-- Post Mockups -->
-            <div class="section-label"><span>Post Preview</span></div>
+            <div class="section-label"><span>Daily Post Schedule</span></div>
             <div class="posts-section">
-                <!-- Square Post -->
+                <!-- 8AM Post - Today -->
                 <div class="post-wrapper">
-                    <div class="post-label">Instagram / Facebook</div>
+                    <div class="post-label">8:00 AM Post — Today's Events</div>
                     <div class="post-square">
                         <div class="post-bg"></div>
                         <div class="post-content">
@@ -804,60 +804,70 @@
                     </div>
                 </div>
 
-                <!-- Story/Reel Post -->
+                <!-- 8PM Post - Tomorrow -->
                 <div class="post-wrapper">
-                    <div class="post-label">Story / Reel</div>
-                    <div class="post-story">
+                    <div class="post-label">8:00 PM Post — Tomorrow's Events</div>
+                    <div class="post-square">
                         <div class="post-bg welding"></div>
                         <div class="post-content">
                             <div class="post-header">
                                 <img src="dallasmakerspace.png" alt="DMS" class="post-header-logo">
                             </div>
                             <div class="post-headline">
-                                <div class="post-title">Today's Classes</div>
-                                <div class="post-subtitle">See what's happening</div>
+                                <div class="post-title">Tomorrow's Classes<br>at Dallas Makerspace</div>
+                                <div class="post-subtitle">Plan your visit</div>
                             </div>
                             <div class="card">
-                                <div class="card-title">Monday, Apr 28</div>
+                                <div class="card-title">Tuesday, April 29</div>
                                 <div class="schedule-table">
                                     <div class="table-header">
                                         <span>Time</span>
                                         <span>Class</span>
+                                        <span></span>
                                     </div>
                                     <div class="table-row">
-                                        <div class="row-time">10:00am</div>
+                                        <div class="row-time">11:00am</div>
                                         <div>
-                                            <div class="row-event">Intro to Ceramics</div>
-                                            <div class="row-location">Ceramics · $25</div>
+                                            <div class="row-event">3D Printing Basics</div>
+                                            <div class="row-location">3D Lab</div>
                                         </div>
+                                        <div class="row-cost">$15</div>
                                     </div>
                                     <div class="table-row">
-                                        <div class="row-time">2:00pm</div>
+                                        <div class="row-time">1:00pm</div>
                                         <div>
-                                            <div class="row-event">Woodworking 101</div>
-                                            <div class="row-location">Wood Shop · Free</div>
+                                            <div class="row-event">Vinyl Cutter Training</div>
+                                            <div class="row-location">Arts & Crafts</div>
                                         </div>
+                                        <div class="row-cost free">Free</div>
                                     </div>
                                     <div class="table-row">
-                                        <div class="row-time">6:00pm</div>
+                                        <div class="row-time">5:30pm</div>
                                         <div>
-                                            <div class="row-event">Laser Training</div>
-                                            <div class="row-location">Laser Lab · Members</div>
+                                            <div class="row-event">CNC Router Intro</div>
+                                            <div class="row-location">Wood Shop</div>
                                         </div>
+                                        <div class="row-cost">$40</div>
                                     </div>
                                     <div class="table-row">
-                                        <div class="row-time">7:30pm</div>
+                                        <div class="row-time">7:00pm</div>
                                         <div>
-                                            <div class="row-event">Arduino Night</div>
-                                            <div class="row-location">Electronics · Free</div>
+                                            <div class="row-event">Welding Open Shop</div>
+                                            <div class="row-location">Metal Shop</div>
                                         </div>
+                                        <div class="row-cost">Members</div>
                                     </div>
                                 </div>
-                                <div class="card-footer">dallasmakerspace.org</div>
+                                <div class="card-footer">calendar.dallasmakerspace.org</div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Multi-Image Note -->
+            <div class="alert-box" style="max-width: 700px; margin: 0 auto 40px auto; text-align: center;">
+                <strong>10 Event Limit:</strong> When more than 10 events exist for a day, the system generates multiple images (carousel post) to display all events cleanly.
             </div>
 
             <!-- Stats -->
@@ -867,16 +877,16 @@
                     <div class="stat-label">Monthly Cost</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value">7:00 AM</div>
-                    <div class="stat-label">Daily Post</div>
+                    <div class="stat-value">8 AM</div>
+                    <div class="stat-label">Today Post</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">8 PM</div>
+                    <div class="stat-label">Tomorrow Post</div>
                 </div>
                 <div class="stat">
                     <div class="stat-value">2</div>
                     <div class="stat-label">Platforms</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">100%</div>
-                    <div class="stat-label">Automated</div>
                 </div>
             </div>
 
@@ -1003,7 +1013,7 @@
                     <tr><td>Purpose</td><td>Automatically post daily events to Facebook and Instagram</td></tr>
                     <tr><td>Data Source</td><td><code>calendar.dallasmakerspace.org/events/feed/rss</code></td></tr>
                     <tr><td>Platforms</td><td>Facebook Page + Instagram Business</td></tr>
-                    <tr><td>Schedule</td><td>Daily at 7:00 AM Central</td></tr>
+                    <tr><td>Schedule</td><td>Daily at 8:00 AM (today) + 8:00 PM (tomorrow) Central</td></tr>
                     <tr><td>Hosting</td><td>GitHub Actions (free)</td></tr>
                     <tr><td>Cost</td><td><strong>$0/month</strong></td></tr>
                 </table>
