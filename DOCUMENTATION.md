@@ -19,14 +19,46 @@
 
 ## Visual Style
 
-The social media posts use a clean, modern design:
+The social media posts use a clean, modern "Squarespace-style" design:
 
-- **Background**: Faded workshop/makerspace photo (dimmed to ~40% brightness)
-- **Overlay**: White card with schedule table
-- **Logo**: DMS logo in header area over the faded background
-- **Typography**: Inter font family, JetBrains Mono for times
-- **Layout**: Time | Class | Location/Cost columns
-- **Accent**: "Free" classes highlighted in green (#22a866)
+### Layout Structure
+
+```
+┌─────────────────────────────┐
+│         [DMS LOGO]          │  ← Top: Logo centered
+│                             │
+│                             │
+│      Today's Classes        │  ← Middle: Headline over
+│    at Dallas Makerspace     │     faded background image
+│      See what's happening   │     (underlined subtitle)
+│                             │
+├─────────────────────────────┤
+│  ┌───────────────────────┐  │
+│  │  Monday, April 28     │  │  ← Bottom: Clean white/cream
+│  │                       │  │     card with schedule table
+│  │  TIME    CLASS   COST │  │
+│  │  10:00am Ceramics $25 │  │
+│  │  2:00pm  Wood    Free │  │
+│  │  6:00pm  Laser   Mbr  │  │
+│  │                       │  │
+│  │  dallasmakerspace.org │  │
+│  └───────────────────────┘  │
+└─────────────────────────────┘
+```
+
+### Design Specs
+
+| Element | Value |
+|---------|-------|
+| **Background** | Workshop photo, dimmed to 50% brightness |
+| **Card Color** | Cream/off-white (`#faf8f5`) |
+| **Card Corners** | 12px border-radius |
+| **Card Shadow** | Soft upward shadow |
+| **Primary Font** | Inter (400-700 weights) |
+| **Monospace Font** | JetBrains Mono (for times) |
+| **Free Highlight** | Green (`#22a866`) |
+| **Headline** | White text, centered, over background |
+| **Subtitle** | Underlined, 85% opacity |
 
 ### Post Formats
 
@@ -36,6 +68,77 @@ The social media posts use a clean, modern design:
 | Reels | 9:16 (1080x1920) | Yes |
 | Stories | 9:16 (1080x1920) | **No** - Use Meta Business Suite |
 | Carousels | 1:1 (up to 10 images) | Yes |
+
+---
+
+## Event Display Rules
+
+### Maximum Events Per Post
+
+| Rule | Value |
+|------|-------|
+| **Max events per post** | 10 |
+| **If more than 10** | Create additional post(s) |
+| **Carousel option** | Split across slides (10 per slide) |
+
+### Multi-Post Logic
+
+```
+Events Today: 15
+
+Post 1: Events 1-10
+Post 2: Events 11-15 + "See all at calendar.dallasmakerspace.org"
+```
+
+### Implementation
+
+```javascript
+const MAX_EVENTS_PER_POST = 10;
+
+function splitIntoChunks(events, chunkSize = MAX_EVENTS_PER_POST) {
+  const chunks = [];
+  for (let i = 0; i < events.length; i += chunkSize) {
+    chunks.push(events.slice(i, i + chunkSize));
+  }
+  return chunks;
+}
+
+// Usage
+const todayEvents = filterToday(allEvents);
+const eventChunks = splitIntoChunks(todayEvents);
+
+for (let i = 0; i < eventChunks.length; i++) {
+  const isLastPost = i === eventChunks.length - 1;
+  const postNumber = eventChunks.length > 1 ? ` (${i + 1}/${eventChunks.length})` : '';
+
+  const { text, imageUrl } = formatPost(eventChunks[i], {
+    postNumber,
+    showFullCalendarLink: isLastPost
+  });
+
+  await postToFacebook(text, imageUrl);
+  await postToInstagram(text, imageUrl);
+}
+```
+
+### Display Priority
+
+When limiting to 10 events, prioritize by:
+
+1. **Classes/Workshops** (paid events first - revenue generating)
+2. **Certifications/Training** (member value)
+3. **Open Events** (community engagement)
+4. **Meetings** (lower priority)
+
+### Edge Cases
+
+| Scenario | Action |
+|----------|--------|
+| 0 events | Skip posting (no empty posts) |
+| 1-10 events | Single post |
+| 11-20 events | 2 posts |
+| 21-30 events | 3 posts (or use carousel) |
+| 30+ events | Consider carousel format or summary post |
 
 ---
 
