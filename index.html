@@ -1239,12 +1239,34 @@ npm test   # Dry run - see what would post</pre>
 
         // ========== LIVE RSS FEED ==========
         const RSS_URL = 'https://calendar.dallasmakerspace.org/events/feed/rss';
-        const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+        const CORS_PROXIES = [
+            'https://corsproxy.io/?',
+            'https://api.allorigins.win/raw?url=',
+            'https://cors-proxy.htmldriven.com/?url='
+        ];
 
         async function fetchEvents() {
+            let text = null;
+
+            // Try each proxy until one works
+            for (const proxy of CORS_PROXIES) {
+                try {
+                    const response = await fetch(proxy + encodeURIComponent(RSS_URL), { timeout: 5000 });
+                    if (response.ok) {
+                        text = await response.text();
+                        if (text && text.includes('<rss')) break;
+                    }
+                } catch (e) {
+                    console.log('Proxy failed:', proxy);
+                }
+            }
+
+            if (!text) {
+                console.error('All CORS proxies failed');
+                return [];
+            }
+
             try {
-                const response = await fetch(CORS_PROXY + encodeURIComponent(RSS_URL));
-                const text = await response.text();
                 const parser = new DOMParser();
                 const xml = parser.parseFromString(text, 'text/xml');
                 const items = xml.querySelectorAll('item');
@@ -1255,10 +1277,11 @@ npm test   # Dry run - see what would post</pre>
                     const description = item.querySelector('description')?.textContent || '';
 
                     // Parse date/time from description
-                    const whenMatch = description.match(/When:<\/b>\s*<\/td>\s*<td[^>]*>([^<]+)/i) ||
-                                      description.match(/(\w+ \w+ \d+ \d+[ap]m)/i);
-                    const whereMatch = description.match(/Where:<\/b>\s*<\/td>\s*<td[^>]*>([^<]+)/i);
-                    const costMatch = description.match(/Cost:<\/b>\s*<\/td>\s*<td[^>]*>\$?([\d.]+)/i);
+                    // Parse: <strong>When</strong></td><td>Mon Apr 27 10am — 4pm Central
+                    const whenMatch = description.match(/<strong>When<\/strong>\s*<\/td>\s*<td>\s*([^<]+)/i) ||
+                                      description.match(/(\w{3} \w{3} \d+ \d+(?::\d+)?[ap]m)/i);
+                    const whereMatch = description.match(/<strong>Where<\/strong>\s*<\/td>\s*<td>\s*([^<]+)/i);
+                    const costMatch = description.match(/<strong>Cost<\/strong>\s*<\/td>\s*<td>\s*\$?([\d.]+)/i);
 
                     if (whenMatch) {
                         const whenText = whenMatch[1] || whenMatch[0];
