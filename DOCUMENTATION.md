@@ -17,6 +17,28 @@
 
 ---
 
+## Visual Style
+
+The social media posts use a clean, modern design:
+
+- **Background**: Faded workshop/makerspace photo (dimmed to ~40% brightness)
+- **Overlay**: White card with schedule table
+- **Logo**: DMS logo in header area over the faded background
+- **Typography**: Inter font family, JetBrains Mono for times
+- **Layout**: Time | Class | Location/Cost columns
+- **Accent**: "Free" classes highlighted in green (#22a866)
+
+### Post Formats
+
+| Format | Dimensions | API Support |
+|--------|------------|-------------|
+| Feed Post | 1:1 (1080x1080) | Yes |
+| Reels | 9:16 (1080x1920) | Yes |
+| Stories | 9:16 (1080x1920) | **No** - Use Meta Business Suite |
+| Carousels | 1:1 (up to 10 images) | Yes |
+
+---
+
 ## Architecture
 
 ```
@@ -51,11 +73,11 @@
 ```
 📅 TODAY at Dallas Makerspace (Mon, Apr 28)
 
-🔧 Purple Wall Paint Day! — 10:00 AM
-   📍 Main Hall | Free
-
-🎨 Intro to Ceramics — 2:00 PM
+🔧 Intro to Ceramics — 10:00 AM
    📍 Ceramics Room | $25
+
+🎨 Woodworking 101 — 2:00 PM
+   📍 Wood Shop | Free
 
 ⚡ Laser Cutter Training — 6:00 PM
    📍 Laser Lab | Members
@@ -65,7 +87,22 @@
 
 ---
 
-## Project Files
+## Project Structure
+
+### Documentation Site (GitHub Pages)
+
+**Repo:** `olsonj-wps/Makerspace`
+**URL:** https://olsonj-wps.github.io/Makerspace/
+
+```
+Makerspace/
+├── index.html           # Interactive mockup site
+├── dallasmakerspace.png # DMS logo
+├── DOCUMENTATION.md     # This file
+└── README.md            # Repo overview
+```
+
+### Automation Code
 
 **Location:** `~/Desktop/dms-social-poster/`
 
@@ -150,8 +187,6 @@ In your app dashboard:
 8. **Copy the Page Access Token**
 
 ### Step 5: Get Page ID
-
-Run this command (replace YOUR_TOKEN):
 
 ```bash
 curl "https://graph.facebook.com/v18.0/me/accounts?access_token=YOUR_TOKEN"
@@ -244,11 +279,14 @@ The automation runs daily via GitHub Actions cron:
 | Time | Timezone |
 |------|----------|
 | 7:00 AM | Central Time (Chicago) |
-| 12:00 PM | UTC |
+| 12:00 PM | UTC (summer/CDT) |
+| 1:00 PM | UTC (winter/CST) |
 
-**To change the time:** Edit `.github/workflows/daily-post.yml` line:
+**Note:** The current cron is set for 12:00 UTC which equals 7 AM CDT (summer). During winter (CST), posts will go out at 6 AM Central. Consider adding a second cron entry for winter if exact timing matters.
+
+**To change the time:** Edit `.github/workflows/daily-post.yml`:
 ```yaml
-- cron: '0 12 * * *'  # 12:00 UTC = 7 AM Central
+- cron: '0 12 * * *'  # 12:00 UTC = 7 AM CDT
 ```
 
 ---
@@ -319,6 +357,31 @@ fb_exchange_token=YOUR_SHORT_TOKEN"
 
 ---
 
+## Posting Formats Reference
+
+### Feed Posts (1:1)
+- Supported via API
+- Image required for Instagram
+- Recommended: 1080x1080px
+
+### Reels (9:16)
+- Supported via API
+- Video: 3-90 seconds
+- Max file size: 1GB
+- Recommended: 1080x1920px
+
+### Stories (9:16)
+- **NOT supported via API**
+- Use Meta Business Suite (free) to schedule
+- URL: https://business.facebook.com
+
+### Carousels
+- Supported via API
+- Up to 10 images
+- All images same aspect ratio
+
+---
+
 ## Maintenance Checklist
 
 ### Weekly
@@ -346,14 +409,32 @@ fb_exchange_token=YOUR_SHORT_TOKEN"
 
 ---
 
+## Dependencies
+
+```json
+{
+  "cheerio": "^1.0.0-rc.12",
+  "date-fns": "^2.30.0",
+  "date-fns-tz": "^2.0.0",
+  "dotenv": "^16.3.1",
+  "node-fetch": "^2.7.0",
+  "rss-parser": "^3.13.0"
+}
+```
+
+---
+
 ## Future Enhancements
 
+- [ ] Generate image with schedule overlay (matching mockup style)
 - [ ] Carousel posts with multiple event images
 - [ ] Include registration/RSVP links
 - [ ] Weekly digest summary
 - [ ] Twitter/X integration
 - [ ] Slack notifications on post success/failure
 - [ ] Analytics tracking
+- [ ] Retry logic for failed API calls
+- [ ] DST-aware scheduling (dual cron entries)
 
 ---
 
@@ -372,6 +453,8 @@ npm start            # Real post
 - Meta Developer: https://developers.facebook.com/
 - Graph Explorer: https://developers.facebook.com/tools/explorer/
 - API Docs: https://developers.facebook.com/docs/graph-api/
+- Business Suite: https://business.facebook.com
+- Mockup Site: https://olsonj-wps.github.io/Makerspace/
 
 ### Environment Variables
 ```
@@ -381,7 +464,13 @@ META_IG_USER_ID          # Instagram Business Account ID
 DRY_RUN                  # true/false
 ```
 
+### GitHub Repos
+| Repo | Purpose |
+|------|---------|
+| `olsonj-wps/Makerspace` | Documentation site (GitHub Pages) |
+| `dms-social-poster` | Automation code (to be created) |
+
 ---
 
 *Documentation for Dallas Makerspace Social Media Automation*
-*Project Location: ~/Desktop/dms-social-poster/*
+*Last Updated: April 2026*
