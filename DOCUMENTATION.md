@@ -50,7 +50,7 @@ The social media posts use a clean, modern "Squarespace-style" design:
 
 | Element | Value |
 |---------|-------|
-| **Background** | Workshop photo, dimmed to 50% brightness |
+| **Background** | Real makerspace photos from `/images/`, dimmed to 50% brightness |
 | **Card Color** | Cream/off-white (`#faf8f5`) |
 | **Card Corners** | 12px border-radius |
 | **Card Shadow** | Soft upward shadow |
@@ -59,6 +59,15 @@ The social media posts use a clean, modern "Squarespace-style" design:
 | **Free Highlight** | Green (`#22a866`) |
 | **Headline** | White text, centered, over background |
 | **Subtitle** | Underlined, 85% opacity |
+
+### Background Photo Options
+
+| CSS Class | Photo | Best For |
+|-----------|-------|----------|
+| `.post-bg` (default) | MS360_Screenshot-35.jpg | Square posts - full workshop view |
+| `.post-bg.welding` | IMG_1080.jpg | Stories/Reels - welding shop |
+| `.post-bg.cnc` | IMG_1070.jpg | Tech posts - CNC router |
+| `.post-bg.lab` | IMG_1040.jpg | Science posts - lab glassware |
 
 ### Post Formats
 
@@ -142,6 +151,49 @@ When limiting to 10 events, prioritize by:
 
 ---
 
+## Photos Library
+
+The `/images/` folder contains 90 real makerspace photos for use in social media posts.
+
+### Photo Inventory
+
+| Type | Count | Filename Pattern |
+|------|-------|------------------|
+| Workshop shots | 44 | `IMG_1030.jpg` - `IMG_1083.jpg` |
+| 360° panoramas | 46 | `MS360_Screenshot-1.jpg` - `MS360_Screenshot-45.jpg` |
+
+### Recommended Photos by Content Type
+
+| Content | Recommended Photo | Why |
+|---------|-------------------|-----|
+| General/Daily posts | `MS360_Screenshot-35.jpg` | Shows full workshop with activity |
+| Welding classes | `IMG_1080.jpg` | Welding shop with tools on wall |
+| CNC/Laser classes | `IMG_1070.jpg` | CNC router bed in action |
+| Science/Chemistry | `IMG_1040.jpg` | Lab glassware on shelves |
+| Darkroom/Photo | `IMG_1055.jpg` | Photo enlarger equipment |
+| Art/Gallery | `MS360_Screenshot-20.jpg` | Hallway with artwork displayed |
+
+### Using Photos in Posts
+
+**GitHub Raw URL:**
+```
+https://raw.githubusercontent.com/olsonj-wps/Makerspace/main/images/FILENAME.jpg
+```
+
+**In automation code:**
+```javascript
+const PHOTO_OPTIONS = {
+  default: 'MS360_Screenshot-35.jpg',
+  welding: 'IMG_1080.jpg',
+  cnc: 'IMG_1070.jpg',
+  lab: 'IMG_1040.jpg'
+};
+
+const imageUrl = `https://raw.githubusercontent.com/olsonj-wps/Makerspace/main/images/${PHOTO_OPTIONS.default}`;
+```
+
+---
+
 ## Architecture
 
 ```
@@ -200,6 +252,13 @@ When limiting to 10 events, prioritize by:
 ```
 Makerspace/
 ├── index.html           # Interactive mockup site
+├── images/              # 90 real makerspace photos
+│   ├── IMG_1030.jpg     # Workshop shots (44 photos)
+│   ├── IMG_1040.jpg     # Lab glassware
+│   ├── IMG_1070.jpg     # CNC router
+│   ├── IMG_1080.jpg     # Welding shop
+│   ├── MS360_Screenshot-1.jpg   # 360° panoramas (46 photos)
+│   └── MS360_Screenshot-35.jpg  # Full workshop overview
 ├── dallasmakerspace.png # DMS logo
 ├── DOCUMENTATION.md     # This file
 └── README.md            # Repo overview
