@@ -1247,30 +1247,45 @@ npm test   # Dry run - see what would post</pre>
 
         // ========== LIVE RSS FEED ==========
         const RSS_URL = 'https://calendar.dallasmakerspace.org/events/feed/rss';
-        const CORS_PROXIES = [
-            'https://corsproxy.io/?',
-            'https://api.allorigins.win/raw?url=',
-            'https://cors-proxy.htmldriven.com/?url='
-        ];
+
+        async function fetchWithTimeout(url, timeout = 3000) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                return response;
+            } catch (e) {
+                clearTimeout(timeoutId);
+                throw e;
+            }
+        }
 
         async function fetchEvents() {
-            let text = null;
+            // Try direct fetch first (works if CORS headers present)
+            const proxies = [
+                '', // direct
+                'https://api.allorigins.win/raw?url=',
+                'https://corsproxy.io/?'
+            ];
 
-            // Try each proxy until one works
-            for (const proxy of CORS_PROXIES) {
+            let text = null;
+            for (const proxy of proxies) {
                 try {
-                    const response = await fetch(proxy + encodeURIComponent(RSS_URL), { timeout: 5000 });
+                    const url = proxy ? proxy + encodeURIComponent(RSS_URL) : RSS_URL;
+                    const response = await fetchWithTimeout(url, 3000);
                     if (response.ok) {
                         text = await response.text();
                         if (text && text.includes('<rss')) break;
+                        text = null; // reset if not valid RSS
                     }
                 } catch (e) {
-                    console.log('Proxy failed:', proxy);
+                    console.log('Fetch failed:', proxy || 'direct');
                 }
             }
 
             if (!text) {
-                console.error('All CORS proxies failed');
+                console.log('RSS unavailable - showing demo data');
                 return [];
             }
 
