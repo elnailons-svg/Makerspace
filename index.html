@@ -892,11 +892,11 @@
             </div>
 
             <!-- Post Mockups -->
-            <div class="section-label"><span>Daily Morning Post</span></div>
+            <div class="section-label"><span>Daily Post Schedule</span></div>
             <div class="posts-section">
                 <!-- 8AM Post - Today -->
                 <div class="post-wrapper">
-                    <div class="post-label">8:00 AM Daily Post</div>
+                    <div class="post-label">8:00 AM Post — Today's Events</div>
                     <div class="post-square" id="post-today">
                         <div class="post-bg"></div>
                         <div class="post-content">
@@ -927,6 +927,38 @@
                     </div>
                 </div>
 
+                <!-- 8PM Post - Tomorrow -->
+                <div class="post-wrapper">
+                    <div class="post-label">8:00 PM Post — Tomorrow's Events</div>
+                    <div class="post-square" id="post-tomorrow">
+                        <div class="post-bg welding"></div>
+                        <div class="post-content">
+                            <div class="post-header">
+                                <img src="dallasmakerspace.png" alt="DMS" class="post-header-logo">
+                            </div>
+                            <div class="post-headline">
+                                <div class="post-title">Tomorrow's Classes<br>at Dallas Makerspace</div>
+                                <div class="post-subtitle">Plan your visit</div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title" id="tomorrow-date">Loading...</div>
+                                <div class="schedule-table" id="tomorrow-events">
+                                    <div class="table-header">
+                                        <span>Time</span>
+                                        <span>Class</span>
+                                        <span></span>
+                                    </div>
+                                    <div class="table-row">
+                                        <div class="row-time">...</div>
+                                        <div><div class="row-event">Loading events...</div></div>
+                                        <div class="row-cost"></div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">calendar.dallasmakerspace.org</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Multi-Image Note -->
@@ -942,7 +974,11 @@
                 </div>
                 <div class="stat">
                     <div class="stat-value">8 AM</div>
-                    <div class="stat-label">Daily Post</div>
+                    <div class="stat-label">Today Post</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">8 PM</div>
+                    <div class="stat-label">Tomorrow Post</div>
                 </div>
                 <div class="stat">
                     <div class="stat-value">2</div>
@@ -973,9 +1009,9 @@
             </header>
 
             <div class="posts-section" style="justify-content: center; gap: 30px;">
-                <!-- Daily Reel -->
+                <!-- Today Reel -->
                 <div class="post-wrapper">
-                    <div class="post-label">8:00 AM Daily</div>
+                    <div class="post-label">8:00 AM — Today</div>
                     <div class="post-story" id="reel-today" style="width: 300px; height: 533px;">
                         <div class="post-bg cnc"></div>
                         <div class="post-content">
@@ -1004,6 +1040,36 @@
                     </div>
                 </div>
 
+                <!-- Tomorrow Reel -->
+                <div class="post-wrapper">
+                    <div class="post-label">8:00 PM — Tomorrow</div>
+                    <div class="post-story" id="reel-tomorrow" style="width: 300px; height: 533px;">
+                        <div class="post-bg lab"></div>
+                        <div class="post-content">
+                            <div class="post-header">
+                                <img src="dallasmakerspace.png" alt="DMS" class="post-header-logo">
+                            </div>
+                            <div class="post-headline">
+                                <div class="post-title">Tomorrow's Classes</div>
+                                <div class="post-subtitle">Plan your visit</div>
+                            </div>
+                            <div class="card">
+                                <div class="card-title" id="reel-tomorrow-date">Loading...</div>
+                                <div class="schedule-table" id="reel-tomorrow-events">
+                                    <div class="table-header">
+                                        <span>Time</span>
+                                        <span>Class</span>
+                                    </div>
+                                    <div class="table-row">
+                                        <div class="row-time">...</div>
+                                        <div><div class="row-event">Loading...</div></div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">calendar.dallasmakerspace.org</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="stats-bar">
@@ -1274,7 +1340,6 @@ npm test   # Dry run - see what would post</pre>
 
         function renderEvents(events, containerId, maxEvents = 10) {
             const container = document.getElementById(containerId);
-            if (!container) return;
             if (!events.length) {
                 container.innerHTML = `
                     <div class="table-header"><span>Time</span><span>Class</span><span></span></div>
@@ -1350,17 +1415,25 @@ npm test   # Dry run - see what would post</pre>
         async function loadLiveData() {
             const events = await fetchEvents();
             const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
 
             const todayEvents = events.filter(e => isSameDay(e.date, today));
+            const tomorrowEvents = events.filter(e => isSameDay(e.date, tomorrow));
 
-            // Overview tab - square post
+            // Overview tab - square posts
             document.getElementById('today-date').textContent = formatDate(today);
+            document.getElementById('tomorrow-date').textContent = formatDate(tomorrow);
             renderEvents(todayEvents, 'today-events');
+            renderEvents(tomorrowEvents, 'tomorrow-events');
 
             // Reels tab - story format
             const reelTodayDate = document.getElementById('reel-today-date');
+            const reelTomorrowDate = document.getElementById('reel-tomorrow-date');
             if (reelTodayDate) reelTodayDate.textContent = formatDate(today);
+            if (reelTomorrowDate) reelTomorrowDate.textContent = formatDate(tomorrow);
             renderStoryEvents(todayEvents, 'reel-today-events');
+            renderStoryEvents(tomorrowEvents, 'reel-tomorrow-events');
         }
 
         // Load on page ready
