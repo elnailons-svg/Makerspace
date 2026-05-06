@@ -1274,6 +1274,7 @@ npm test   # Dry run - see what would post</pre>
 
         function renderEvents(events, containerId, maxEvents = 10) {
             const container = document.getElementById(containerId);
+            if (!container) return;
             if (!events.length) {
                 container.innerHTML = `
                     <div class="table-header"><span>Time</span><span>Class</span><span></span></div>
@@ -1349,25 +1350,17 @@ npm test   # Dry run - see what would post</pre>
         async function loadLiveData() {
             const events = await fetchEvents();
             const today = new Date();
-            const tomorrow = new Date(today);
-            tomorrow.setDate(tomorrow.getDate() + 1);
 
             const todayEvents = events.filter(e => isSameDay(e.date, today));
-            const tomorrowEvents = events.filter(e => isSameDay(e.date, tomorrow));
 
-            // Overview tab - square posts
+            // Overview tab - square post
             document.getElementById('today-date').textContent = formatDate(today);
-            document.getElementById('tomorrow-date').textContent = formatDate(tomorrow);
             renderEvents(todayEvents, 'today-events');
-            renderEvents(tomorrowEvents, 'tomorrow-events');
 
             // Reels tab - story format
             const reelTodayDate = document.getElementById('reel-today-date');
-            const reelTomorrowDate = document.getElementById('reel-tomorrow-date');
             if (reelTodayDate) reelTodayDate.textContent = formatDate(today);
-            if (reelTomorrowDate) reelTomorrowDate.textContent = formatDate(tomorrow);
             renderStoryEvents(todayEvents, 'reel-today-events');
-            renderStoryEvents(tomorrowEvents, 'reel-tomorrow-events');
         }
 
         // Load on page ready
