@@ -855,7 +855,7 @@
             <header>
                 <img src="dallasmakerspace.png" alt="Dallas Makerspace" class="header-logo">
                 <h1>Daily Social Poster</h1>
-                <p class="subtitle">Automatically share daily classes and events on Facebook & Instagram — 8 AM for today, 8 PM for tomorrow</p>
+                <p class="subtitle">Automatically share daily classes and events on Facebook & Instagram — every morning at 8 AM</p>
             </header>
 
             <!-- Flow Section -->
@@ -863,7 +863,7 @@
             <div class="flow-wrapper">
                 <div class="flow-item">
                     <div class="flow-icon trigger">&#9201;</div>
-                    <div class="flow-label">8 AM + 8 PM</div>
+                    <div class="flow-label">8 AM Daily</div>
                     <div class="flow-sublabel">GitHub Actions</div>
                 </div>
                 <div class="flow-arrow">&#10132;</div>
@@ -892,11 +892,11 @@
             </div>
 
             <!-- Post Mockups -->
-            <div class="section-label"><span>Daily Post Schedule</span></div>
+            <div class="section-label"><span>Daily Morning Post</span></div>
             <div class="posts-section">
                 <!-- 8AM Post - Today -->
                 <div class="post-wrapper">
-                    <div class="post-label">8:00 AM Post — Today's Events</div>
+                    <div class="post-label">8:00 AM Daily Post</div>
                     <div class="post-square" id="post-today">
                         <div class="post-bg"></div>
                         <div class="post-content">
@@ -927,38 +927,6 @@
                     </div>
                 </div>
 
-                <!-- 8PM Post - Tomorrow -->
-                <div class="post-wrapper">
-                    <div class="post-label">8:00 PM Post — Tomorrow's Events</div>
-                    <div class="post-square" id="post-tomorrow">
-                        <div class="post-bg welding"></div>
-                        <div class="post-content">
-                            <div class="post-header">
-                                <img src="dallasmakerspace.png" alt="DMS" class="post-header-logo">
-                            </div>
-                            <div class="post-headline">
-                                <div class="post-title">Tomorrow's Classes<br>at Dallas Makerspace</div>
-                                <div class="post-subtitle">Plan your visit</div>
-                            </div>
-                            <div class="card">
-                                <div class="card-title" id="tomorrow-date">Loading...</div>
-                                <div class="schedule-table" id="tomorrow-events">
-                                    <div class="table-header">
-                                        <span>Time</span>
-                                        <span>Class</span>
-                                        <span></span>
-                                    </div>
-                                    <div class="table-row">
-                                        <div class="row-time">...</div>
-                                        <div><div class="row-event">Loading events...</div></div>
-                                        <div class="row-cost"></div>
-                                    </div>
-                                </div>
-                                <div class="card-footer">calendar.dallasmakerspace.org</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Multi-Image Note -->
@@ -974,11 +942,7 @@
                 </div>
                 <div class="stat">
                     <div class="stat-value">8 AM</div>
-                    <div class="stat-label">Today Post</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">8 PM</div>
-                    <div class="stat-label">Tomorrow Post</div>
+                    <div class="stat-label">Daily Post</div>
                 </div>
                 <div class="stat">
                     <div class="stat-value">2</div>
@@ -1009,9 +973,9 @@
             </header>
 
             <div class="posts-section" style="justify-content: center; gap: 30px;">
-                <!-- Today Reel -->
+                <!-- Daily Reel -->
                 <div class="post-wrapper">
-                    <div class="post-label">8:00 AM — Today</div>
+                    <div class="post-label">8:00 AM Daily</div>
                     <div class="post-story" id="reel-today" style="width: 300px; height: 533px;">
                         <div class="post-bg cnc"></div>
                         <div class="post-content">
@@ -1040,36 +1004,6 @@
                     </div>
                 </div>
 
-                <!-- Tomorrow Reel -->
-                <div class="post-wrapper">
-                    <div class="post-label">8:00 PM — Tomorrow</div>
-                    <div class="post-story" id="reel-tomorrow" style="width: 300px; height: 533px;">
-                        <div class="post-bg lab"></div>
-                        <div class="post-content">
-                            <div class="post-header">
-                                <img src="dallasmakerspace.png" alt="DMS" class="post-header-logo">
-                            </div>
-                            <div class="post-headline">
-                                <div class="post-title">Tomorrow's Classes</div>
-                                <div class="post-subtitle">Plan your visit</div>
-                            </div>
-                            <div class="card">
-                                <div class="card-title" id="reel-tomorrow-date">Loading...</div>
-                                <div class="schedule-table" id="reel-tomorrow-events">
-                                    <div class="table-header">
-                                        <span>Time</span>
-                                        <span>Class</span>
-                                    </div>
-                                    <div class="table-row">
-                                        <div class="row-time">...</div>
-                                        <div><div class="row-event">Loading...</div></div>
-                                    </div>
-                                </div>
-                                <div class="card-footer">calendar.dallasmakerspace.org</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="stats-bar">
@@ -1117,9 +1051,9 @@
                     <tr><td>Purpose</td><td>Automatically post daily events to Facebook and Instagram</td></tr>
                     <tr><td>Data Source</td><td><code>calendar.dallasmakerspace.org/events/feed/rss</code></td></tr>
                     <tr><td>Platforms</td><td>Facebook Page + Instagram Business</td></tr>
-                    <tr><td>Schedule</td><td>Daily at 8:00 AM (today) + 8:00 PM (tomorrow) Central</td></tr>
+                    <tr><td>Schedule</td><td>Daily at 8:00 AM Central</td></tr>
                     <tr><td>Hosting</td><td>GitHub Actions (free)</td></tr>
-                    <tr><td>Cost</td><td><strong>$20/month</strong> (AI subscription)</td></tr>
+                    <tr><td>Cost</td><td><strong>$20/month</strong> (Coding Assistant subscription)</td></tr>
                 </table>
             </section>
 
