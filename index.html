@@ -339,6 +339,84 @@
             flex: 1;
         }
 
+        .schedule-table.density-compact .table-header {
+            grid-template-columns: 46px 1fr 38px;
+            gap: 4px;
+            padding-bottom: 4px;
+            margin-bottom: 2px;
+        }
+
+        .schedule-table.density-compact .table-header span {
+            font-size: 0.48rem;
+        }
+
+        .schedule-table.density-compact .table-row {
+            grid-template-columns: 46px 1fr 38px;
+            gap: 4px;
+            padding: 3px 0;
+        }
+
+        .schedule-table.density-compact .row-time {
+            font-size: 0.58rem;
+        }
+
+        .schedule-table.density-compact .row-event {
+            font-size: 0.62rem;
+            line-height: 1.12;
+        }
+
+        .schedule-table.density-compact .row-location {
+            font-size: 0.48rem;
+            line-height: 1.1;
+        }
+
+        .schedule-table.density-compact .row-cost {
+            font-size: 0.5rem;
+        }
+
+        .schedule-table.density-compact .member-badge {
+            width: 38px;
+        }
+
+        .schedule-table.density-ultra .table-header {
+            grid-template-columns: 38px 1fr 32px;
+            gap: 3px;
+            padding-bottom: 3px;
+            margin-bottom: 1px;
+        }
+
+        .schedule-table.density-ultra .table-header span {
+            font-size: 0.42rem;
+            letter-spacing: 0;
+        }
+
+        .schedule-table.density-ultra .table-row {
+            grid-template-columns: 38px 1fr 32px;
+            gap: 3px;
+            padding: 2px 0;
+        }
+
+        .schedule-table.density-ultra .row-time {
+            font-size: 0.5rem;
+        }
+
+        .schedule-table.density-ultra .row-event {
+            font-size: 0.53rem;
+            line-height: 1.05;
+        }
+
+        .schedule-table.density-ultra .row-location {
+            display: none;
+        }
+
+        .schedule-table.density-ultra .row-cost {
+            font-size: 0.44rem;
+        }
+
+        .schedule-table.density-ultra .member-badge {
+            width: 31px;
+        }
+
         .table-header {
             display: grid;
             grid-template-columns: 55px 1fr 45px;
@@ -378,6 +456,12 @@
             font-weight: 500;
         }
 
+        .member-badge {
+            width: 48px;
+            height: auto;
+            display: block;
+        }
+
         .row-location {
             font-size: 0.55rem;
             color: #888;
@@ -387,6 +471,9 @@
             font-size: 0.6rem;
             color: #888;
             text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
         }
 
         .row-cost.free {
@@ -444,24 +531,50 @@
         }
 
         .post-story .table-header {
-            grid-template-columns: 55px 1fr;
+            grid-template-columns: 55px 1fr 45px;
         }
 
         .post-story .table-row {
-            grid-template-columns: 55px 1fr;
-            padding: 8px 0;
+            grid-template-columns: 55px 1fr 45px;
+            padding: 5px 0;
         }
 
         .post-story .row-time {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
 
         .post-story .row-event {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+        }
+
+        .post-story .member-badge {
+            width: 48px;
         }
 
         .post-story .row-location {
-            font-size: 0.65rem;
+            font-size: 0.55rem;
+        }
+
+        .post-story .schedule-table.density-compact .table-header,
+        .post-story .schedule-table.density-compact .table-row {
+            grid-template-columns: 42px 1fr 36px;
+        }
+
+        .post-story .schedule-table.density-compact .row-event {
+            font-size: 0.58rem;
+        }
+
+        .post-story .schedule-table.density-ultra .table-header,
+        .post-story .schedule-table.density-ultra .table-row {
+            grid-template-columns: 34px 1fr 29px;
+        }
+
+        .post-story .schedule-table.density-ultra .row-event {
+            font-size: 0.48rem;
+        }
+
+        .post-story .schedule-table.density-ultra .row-time {
+            font-size: 0.46rem;
         }
 
         /* Stats Bar */
@@ -776,6 +889,10 @@
 
         .modal-post .row-event {
             font-size: 0.95rem;
+        }
+
+        .modal-post .member-badge {
+            width: 64px;
         }
 
         .modal-post .row-location {
@@ -1230,6 +1347,7 @@ npm test   # Dry run - see what would post</pre>
                 items.forEach(item => {
                     const title = item.querySelector('title')?.textContent || '';
                     const description = item.querySelector('description')?.textContent || '';
+                    const link = item.querySelector('link')?.textContent || item.querySelector('guid')?.textContent || '';
 
                     // Parse date/time from description
                     // Parse: <strong>When</strong></td><td>Mon Apr 27 10am — 4pm Central
@@ -1260,7 +1378,9 @@ npm test   # Dry run - see what would post</pre>
                                 time: `${timeMatch[1]}${timeMatch[2].toLowerCase()}`,
                                 timeSort: hour,
                                 location: whereMatch ? whereMatch[1].replace(/^Workshop - |^Classroom - /g, '').trim() : '',
-                                cost: costMatch ? parseFloat(costMatch[1]) : 0
+                                cost: costMatch ? parseFloat(costMatch[1]) : 0,
+                                link: link.replace(/^http:/, 'https:'),
+                                memberOnly: false
                             });
                         }
                     }
@@ -1285,8 +1405,63 @@ npm test   # Dry run - see what would post</pre>
                    d1.getDate() === d2.getDate();
         }
 
-        function renderEvents(events, containerId, maxEvents = 10) {
+        function hasMemberOnlyRestriction(html) {
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const labels = Array.from(doc.querySelectorAll('strong'));
+            const restrictionLabel = labels.find(label => /restrictions/i.test(label.textContent));
+            const restrictionText = restrictionLabel?.parentElement?.textContent || '';
+            return /DMS\s+members\s+only/i.test(restrictionText);
+        }
+
+        async function fetchEventPage(url) {
+            const proxies = [
+                '',
+                'https://api.allorigins.win/raw?url=',
+                'https://corsproxy.io/?'
+            ];
+
+            for (const proxy of proxies) {
+                try {
+                    const requestUrl = proxy ? proxy + encodeURIComponent(url) : url;
+                    const response = await fetchWithTimeout(requestUrl, 5000);
+                    if (response.ok) return await response.text();
+                } catch (e) {
+                    console.log('Event detail fetch failed:', proxy || 'direct');
+                }
+            }
+
+            return '';
+        }
+
+        async function markMemberOnlyEvents(events) {
+            await Promise.all(events.map(async event => {
+                if (!event.link) return;
+                const html = await fetchEventPage(event.link);
+                event.memberOnly = html ? hasMemberOnlyRestriction(html) : false;
+            }));
+        }
+
+        function memberBadgeHtml(event) {
+            return event.memberOnly
+                ? '<img src="images/dms-members-only.svg" alt="DMS members only" class="member-badge">'
+                : '';
+        }
+
+        function costCellHtml(event) {
+            const costClass = event.cost === 0 ? 'free' : '';
+            const costText = event.cost === 0 ? 'Free' : `$${event.cost}`;
+            return `<div class="row-cost ${costClass}">${memberBadgeHtml(event) || costText}</div>`;
+        }
+
+        function densityClassForEventCount(count) {
+            if (count > 12) return 'density-ultra';
+            if (count > 8) return 'density-compact';
+            return 'density-regular';
+        }
+
+        function renderEvents(events, containerId) {
             const container = document.getElementById(containerId);
+            container.className = `schedule-table ${densityClassForEventCount(events.length)}`;
             if (!events.length) {
                 container.innerHTML = `
                     <div class="table-header"><span>Time</span><span>Class</span><span></span></div>
@@ -1300,12 +1475,9 @@ npm test   # Dry run - see what would post</pre>
 
             // Sort by time
             events.sort((a, b) => a.timeSort - b.timeSort);
-            const displayEvents = events.slice(0, maxEvents);
 
             let html = `<div class="table-header"><span>Time</span><span>Class</span><span></span></div>`;
-            displayEvents.forEach(ev => {
-                const costClass = ev.cost === 0 ? 'free' : '';
-                const costText = ev.cost === 0 ? 'Free' : `$${ev.cost}`;
+            events.forEach(ev => {
                 html += `
                     <div class="table-row">
                         <div class="row-time">${ev.time}</div>
@@ -1313,46 +1485,41 @@ npm test   # Dry run - see what would post</pre>
                             <div class="row-event">${ev.title}</div>
                             <div class="row-location">${ev.location}</div>
                         </div>
-                        <div class="row-cost ${costClass}">${costText}</div>
+                        ${costCellHtml(ev)}
                     </div>`;
             });
-
-            if (events.length > maxEvents) {
-                html += `<div class="table-row" style="justify-content:center;color:#888;font-size:0.7rem;">
-                    +${events.length - maxEvents} more events
-                </div>`;
-            }
 
             container.innerHTML = html;
         }
 
-        function renderStoryEvents(events, containerId, maxEvents = 4) {
+        function renderStoryEvents(events, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
+            container.className = `schedule-table ${densityClassForEventCount(events.length)}`;
 
             if (!events.length) {
                 container.innerHTML = `
-                    <div class="table-header"><span>Time</span><span>Class</span></div>
+                    <div class="table-header"><span>Time</span><span>Class</span><span></span></div>
                     <div class="table-row">
                         <div class="row-time">—</div>
                         <div><div class="row-event">No events</div></div>
+                        <div class="row-cost"></div>
                     </div>`;
                 return;
             }
 
             events.sort((a, b) => a.timeSort - b.timeSort);
-            const displayEvents = events.slice(0, maxEvents);
 
-            let html = `<div class="table-header"><span>Time</span><span>Class</span></div>`;
-            displayEvents.forEach(ev => {
-                const costText = ev.cost === 0 ? 'Free' : `$${ev.cost}`;
+            let html = `<div class="table-header"><span>Time</span><span>Class</span><span></span></div>`;
+            events.forEach(ev => {
                 html += `
                     <div class="table-row">
                         <div class="row-time">${ev.time}</div>
                         <div>
                             <div class="row-event">${ev.title}</div>
-                            <div class="row-location">${ev.location} · ${costText}</div>
+                            <div class="row-location">${ev.location}</div>
                         </div>
+                        ${costCellHtml(ev)}
                     </div>`;
             });
 
@@ -1364,6 +1531,7 @@ npm test   # Dry run - see what would post</pre>
             const today = new Date();
 
             const todayEvents = events.filter(e => isSameDay(e.date, today));
+            await markMemberOnlyEvents(todayEvents);
 
             // Overview tab - square post
             document.getElementById('today-date').textContent = formatDate(today);
